@@ -20,13 +20,13 @@ public class MenuItems {
 	@Column(name="ITEM_DESCRIPTION")
 	private String itemDescription;
 	@Column(name="DEPARTMENT")
-	private int itemDepartment;
+	private long itemDepartment;
 	
 	public MenuItems() {
 		super();
 	}
 	
-	public MenuItems(long id, String itemName, double itemPrice, String itemDescription, int itemDepartment) {
+	public MenuItems(long id, String itemName, double itemPrice, String itemDescription, long itemDepartment) {
 		super();
 		this.id = id;
 		this.itemName = itemName;
@@ -35,7 +35,7 @@ public class MenuItems {
 		this.itemDepartment = itemDepartment;
 	}
 	
-	public MenuItems(long id, String itemName, double itemPrice, String itemPath, String itemDescription, int itemDepartment) {
+	public MenuItems(long id, String itemName, double itemPrice, String itemPath, String itemDescription, long itemDepartment) {
 		super();
 		this.id = id;
 		this.itemName = itemName;
@@ -85,11 +85,11 @@ public class MenuItems {
 		this.itemDescription = itemDescription;
 	}
 
-	public int getItemDepartment() {
+	public long getItemDepartment() {
 		return itemDepartment;
 	}
 
-	public void setItemDepartment(int itemDepartment) {
+	public void setItemDepartment(long itemDepartment) {
 		this.itemDepartment = itemDepartment;
 	}
 	

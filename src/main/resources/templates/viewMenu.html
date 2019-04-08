@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Menu Display</title>
+</head>
+<body>
+<form method="POST">
+<p>Department to Display</p>
+<select th:field="${departments}" id ="ddDepartments">
+	<option value="0">Select Department</option>
+	<option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.departmentName}"></option>
+</select>
+<a th:href="@{/view/{id}(id=${department.id})}">Select</a>
+</form>
+</body>
+</html>

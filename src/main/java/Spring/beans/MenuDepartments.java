@@ -10,6 +10,7 @@ import javax.persistence.Id;
 public class MenuDepartments {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="DEPARTMENT_ID")
 	private long id;
 	@Column(name="DEPARTMENT_NAME")
 	private String departmentName;
