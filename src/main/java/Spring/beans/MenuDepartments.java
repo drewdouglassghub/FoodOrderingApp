@@ -1,18 +1,18 @@
 package Spring.beans;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="menu_departments")
+@Entity
+@Table(name="menu_departments")
 public class MenuDepartments {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="DEPARTMENT_ID")
-	private long id;
-	@Column(name="DEPARTMENT_NAME")
+	@Column(name="department_id")
+	private long departmentId;
+	@Column(name="department_name")
 	private String departmentName;
 	
 	public MenuDepartments() {
@@ -21,16 +21,16 @@ public class MenuDepartments {
 	
 	public MenuDepartments(long id, String departmentName) {
 		super();
-		this.id = id;
+		this.departmentId = id;
 		this.departmentName = departmentName;
 	}
 
-	public long getId() {
-		return id;
+	public long getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setDepartmentId(long departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public String getDepartmentName() {
@@ -43,6 +43,6 @@ public class MenuDepartments {
 	
 	@Override
 	public String toString() {
-		return "Department [id = " + id + ", Department Name = " + departmentName + "]";
+		return "Department [id = " + departmentId + ", Department Name = " + departmentName + "]";
 	}
 }
