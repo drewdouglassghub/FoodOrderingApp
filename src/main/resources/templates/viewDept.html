@@ -10,14 +10,16 @@
 <table>
 <thead>
     <tr>
-        <th>ID:</th>
-        <th>Item Name:</th>
+        <th>ID: </th>
+        <th>Item Name: </th>
+        <th>Description: </th>
     </tr>
 </thead>
 <tr th:each="currentMenuItem : ${menuItems}" >
 <td th:text="${currentMenuItem.getId()}" />
 <td th:text="${currentMenuItem.getItemName()}" />
- <!--  <td><a th:href="@{/view/{id}(id=${currentDepartment.getDepartmentId()})}">View</a></td>-->
+<td th:text="${currentMenuItem.getItemDescription()}" />
+  <td><a th:href="@{/view/{id}(id=${currentMenuItem.getId()})}">Add to cart</a></td>
 </tr>
 </table>
 <a href="../">Home</a><br />
