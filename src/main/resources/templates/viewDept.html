@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Department Menu</title>
+</head>
+<body>
+		
+		<div class="container">
+<table>
+<thead>
+    <tr>
+        <th>ID:</th>
+        <th>Item Name:</th>
+    </tr>
+</thead>
+<tr th:each="currentMenuItem : ${menuItems}" >
+<td th:text="${currentMenuItem.getId()}" />
+<td th:text="${currentMenuItem.getItemName()}" />
+ <!--  <td><a th:href="@{/view/{id}(id=${currentDepartment.getDepartmentId()})}">View</a></td>-->
+</tr>
+</table>
+<a href="../">Home</a><br />
+</div>
+			
+</body>
+</html>

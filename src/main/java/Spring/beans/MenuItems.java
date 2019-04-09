@@ -5,12 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="menu_items")
+@Entity
+@Table(name="menu_items")
 public class MenuItems {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long itemId;
 	@Column(name="ITEM_NAME")
 	private String itemName;
 	@Column(name="ITEM_PRICE")
@@ -19,7 +21,7 @@ public class MenuItems {
 	private String itemPath;
 	@Column(name="ITEM_DESCRIPTION")
 	private String itemDescription;
-	@Column(name="DEPARTMENT")
+	@Column(name="department_id")
 	private long itemDepartment;
 	
 	public MenuItems() {
@@ -28,7 +30,7 @@ public class MenuItems {
 	
 	public MenuItems(long id, String itemName, double itemPrice, String itemDescription, long itemDepartment) {
 		super();
-		this.id = id;
+		this.itemId = id;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.itemDescription = itemDescription;
@@ -37,7 +39,7 @@ public class MenuItems {
 	
 	public MenuItems(long id, String itemName, double itemPrice, String itemPath, String itemDescription, long itemDepartment) {
 		super();
-		this.id = id;
+		this.itemId = id;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.itemPath = itemPath;
@@ -46,14 +48,15 @@ public class MenuItems {
 	}
 
 	public long getId() {
-		return id;
+		return itemId;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.itemId = id;
 	}
 
 	public String getItemName() {
+		System.out.println("Item: " + itemName);
 		return itemName;
 	}
 
@@ -95,6 +98,6 @@ public class MenuItems {
 	
 	@Override
 	public String toString() {
-		return "MenuItem [id = " + id + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment + "]";
+		return "MenuItem [id = " + itemId + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment + "]";
 	}
 }

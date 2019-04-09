@@ -40,7 +40,7 @@ public class WebController {
 		return "customerportal";
 	}
 	
-	@GetMapping("/")
+	@GetMapping("../")
 	public String goToHome() {
 		return "index";
 	}
