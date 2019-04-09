@@ -15,8 +15,7 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
-import Spring.beans.Customer;
-import Spring.beans.OrderItems;
+
 import Spring.beans.Orders;
 
 @Controller
@@ -41,6 +40,12 @@ public class WebController {
 		return "customerportal";
 	}
 	
+	@GetMapping("/")
+	public String goToHome() {
+		return "index";
+	}
+	
+	
 	@GetMapping("/viewMenu")
 	public String menuInit(Model model) {
 		model.addAttribute("departments", deptRepo.findAll());
@@ -55,6 +60,13 @@ public class WebController {
 
 	
 /************************Order Related Edits******************************/
+	
+	@GetMapping("/viewOrders")
+	public String viewOrderList(Model model) {
+		model.addAttribute("orders", oRepo.findAll());
+		return "viewOrders";
+	}
+	
 	@GetMapping("/editOrder/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		Orders o = oRepo.findById(id)
@@ -76,4 +88,12 @@ public class WebController {
 	}
 /*************************************************************************/	
 
+/************************Admin Related Edits******************************/	
+
+	/*@GetMapping("/editMenu/{id}")
+	public String showMenuUpdateForm(@PathVariable("id") long id, Model model) {
+		MenuItems i = menuRepo.find
+	}*/
+	
+	
 }

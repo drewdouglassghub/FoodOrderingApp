@@ -1,17 +1,38 @@
+<html >
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Menu Display</title>
 </head>
 <body>
-<form method="POST">
+
+<div class="container">
+<table>
+<thead>
+    <tr>
+        <th>ID:</th>
+        <th>Department Name:</th>
+    </tr>
+</thead>
+<tr th:each="currentDepartment : ${departments}" >
+<td th:text="${currentDepartment.departmentid}" />
+ <td th:text="${currentDepartment.departmentname}" />
+ <td>
+</tr>
+</table>
+<a href="../">Home</a><br />
+</div>
+
+
+<!-- <form method="POST">
 <p>Department to Display</p>
+
+ 
 <select th:field="${departments}" id ="ddDepartments">
 	<option value="0">Select Department</option>
 	<option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.departmentName}"></option>
 </select>
 <a th:href="@{/view/{id}(id=${department.id})}">Select</a>
-</form>
+</form> -->
 </body>
 </html>
