@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,7 +16,7 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
-
+import Spring.beans.MenuItems;
 import Spring.beans.Orders;
 
 @Controller
@@ -45,6 +46,10 @@ public class WebController {
 		return "index";
 	}
 	
+	@GetMapping("/adminportal") 
+		public String goToAdminPortal() {
+			return "adminPortal";
+		}
 	
 	@GetMapping("/viewMenu")
 	public String menuInit(Model model) {
@@ -90,6 +95,11 @@ public class WebController {
 
 /************************Admin Related Edits******************************/	
 
+	@GetMapping("/addItem")
+	public String addNewItem(@ModelAttribute MenuItems mi, Model model) {
+		menuRepo.save(mi);
+		return "adminPortal";
+	}
 	/*@GetMapping("/editMenu/{id}")
 	public String showMenuUpdateForm(@PathVariable("id") long id, Model model) {
 		MenuItems i = menuRepo.find
