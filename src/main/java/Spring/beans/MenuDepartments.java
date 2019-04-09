@@ -26,6 +26,7 @@ public class MenuDepartments {
 	}
 
 	public long getDepartmentId() {
+		System.out.println("dept Id: " + departmentId);
 		return departmentId;
 	}
 
