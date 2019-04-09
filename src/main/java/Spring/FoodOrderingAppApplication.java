@@ -2,12 +2,14 @@ package Spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
 
 @SpringBootApplication
 public class FoodOrderingAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FoodOrderingAppApplication.class, args);
+		ApplicationContext ctx = SpringApplication.run(FoodOrderingAppApplication.class, args);
 	}
 
 }

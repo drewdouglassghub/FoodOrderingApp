@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+   
+</head>
+
+<body>
+    <div class="container">
+			
+
+		
+ 		<form th:object="${newUser}" th:action="@{/customer/index}" method='POST'>
+ 
+ 				User name: <input name="username" id="username" size="30"> <br />
+				Password: <input name="password" id="password" size="30"><br />
+				
+              	<input name="submit" type="submit" value="submit" />
+              
+        </form>
+
+    </div>
+</body>
+
+</html>
