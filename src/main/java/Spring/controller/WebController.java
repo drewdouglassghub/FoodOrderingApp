@@ -95,15 +95,22 @@ public class WebController {
 
 /************************Admin Related Edits******************************/	
 
-	@GetMapping("/addItem")
-	public String addNewItem(@ModelAttribute MenuItems mi, Model model) {
-		menuRepo.save(mi);
-		return "adminPortal";
-	}
 	/*@GetMapping("/editMenu/{id}")
 	public String showMenuUpdateForm(@PathVariable("id") long id, Model model) {
 		MenuItems i = menuRepo.find
 	}*/
 	
+	@GetMapping("/inputMenuItem")
+	public String addNewMenuItem(Model model) {
+		MenuItems mi = new MenuItems();
+		model.addAttribute("newMenuItem", mi);
+		return "insertMenuItem";
+	}
+	
+	@PostMapping("/inputMenuItem")
+	public String addNewMenuItem(@ModelAttribute MenuItems mi, Model model) {
+		menuRepo.save(mi);
+		return "adminPortal";
+	}
 	
 }

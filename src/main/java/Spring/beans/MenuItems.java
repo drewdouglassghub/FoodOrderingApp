@@ -21,7 +21,7 @@ public class MenuItems {
 	private String itemPath;
 	@Column(name="ITEM_DESCRIPTION")
 	private String itemDescription;
-	@Column(name="department_id")
+	@Column(name="DEPARTMENT")
 	private long itemDepartment;
 	
 	public MenuItems() {
