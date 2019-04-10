@@ -18,6 +18,7 @@ import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
 import Spring.beans.Customer;
 import Spring.beans.MenuItems;
+import Spring.beans.OrderItems;
 import Spring.beans.Orders;
 
 @Controller
@@ -62,7 +63,7 @@ public class WebController {
 		return "viewMenu";
 	}
 	
-	@GetMapping("/view/{id}")
+	@GetMapping("/viewDept/{id}")
 	public String showThisDept(@PathVariable("id") long id, Model model) {
 		model.addAttribute("menuItems", menuRepo.findByItemDepartment(id));
 		return "viewDept";
@@ -76,6 +77,19 @@ public class WebController {
 		model.addAttribute("orders", oRepo.findAll());
 		return "viewOrders";
 	}
+	
+	
+	@GetMapping("/addOrderItem/{id}")
+	public String addOrderItem(@PathVariable("id") int id, Model model) {
+		OrderItems oi = new OrderItems(id);
+		model.addAttribute("addOrderItem", oi);
+		oi.setQuantity(1);
+		oi.setOrderId(1); //Placeholder until we have login functionality
+						  //Must have an order in database to work
+		oiRepo.save(oi);
+		return "customerportal";
+	}
+	
 	
 	@GetMapping("/editOrder/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
