@@ -22,6 +22,8 @@ public class Customer {
 	private String email;
 	@Column(name = "CUSTOMER_PHONE")
 	private int phoneNumber;
+	
+	private String auth;
 
 	public Customer() {
 		super();
@@ -30,18 +32,19 @@ public class Customer {
 
 	
 	//No ID constructor
-	public Customer(String firstName, String lastName, Date visitDate, String email, int phoneNumber) {
+	public Customer(String firstName, String lastName, Date visitDate, String email, int phoneNumber, String auth) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.visitDate = visitDate;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.auth = auth;
 	}
 
 
 	//All fields constructor
-	public Customer(long id, String firstName, String lastName, Date visitDate, String email, int phoneNumber) {
+	public Customer(long id, String firstName, String lastName, Date visitDate, String email, int phoneNumber, String auth) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -49,8 +52,19 @@ public class Customer {
 		this.visitDate = visitDate;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.auth = auth;
 	}
 
+
+
+	public String getAuth() {
+		return auth;
+	}
+
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
 
 
 	public long getId() {
@@ -104,6 +118,6 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", visitDate=" + visitDate
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
+				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", auth=" + auth + "]";
 	}
 }

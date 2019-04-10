@@ -16,6 +16,7 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
+import Spring.beans.Customer;
 import Spring.beans.MenuItems;
 import Spring.beans.Orders;
 
@@ -46,10 +47,14 @@ public class WebController {
 		return "index";
 	}
 	
+	
+	
 	@GetMapping("/adminportal") 
 		public String goToAdminPortal() {
 			return "adminPortal";
 		}
+	
+/********************************Menu Related Edits**********************/
 	
 	@GetMapping("/viewMenu")
 	public String menuInit(Model model) {
@@ -100,10 +105,24 @@ public class WebController {
 		menuRepo.save(mi);
 		return "adminPortal";
 	}
-	/*@GetMapping("/editMenu/{id}")
-	public String showMenuUpdateForm(@PathVariable("id") long id, Model model) {
-		MenuItems i = menuRepo.find
-	}*/
+
 	
+	
+/****************************Login Related Edits*********************************************/
+	@GetMapping("/loginUser/{username}")
+	public String validateUser(@ModelAttribute Customer c, Model model) {
+		if(c.getAuth() == "ADMIN") {
+		return "adminPortal";
+		}else if(c.getAuth() == "CUSTOMER") {
+		return "customerportal";
+		}else {
+			return "index";
+		}
+	}
+	
+	@GetMapping("/login")
+	public String goToLogin() {
+		return "login";
+	}
 	
 }
