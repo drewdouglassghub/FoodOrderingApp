@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View All Orders</title>
+</head>
+<body>
+<div class="container">
+<table>
+<thead>
+    <tr>
+        <th>Order Id:</th>
+        <th>Customer Id:</th>
+
+    </tr>
+</thead>
+<tr th:each="currentOrder : ${orders}" >
+<td th:text="${currentOrder.venueid}" />
+ <td th:text="${currentOrder.customerid}" />
+
+ 
+ <td><a
+th:href="@{/edit/{id}(id=${currentVenue.venueid})}">Edit Order</a></td>
+ <td><a
+th:href="@{/delete/{id}(id=${currentVenue.venueid})}">Cancel Order</a></td>
+</tr>
+</table>
+<a href="../addVenue">Add venue</a>
+<a href="../">Home</a><br />
+</div>
+
+
+
+</body>
+</html>
