@@ -23,6 +23,12 @@ public class OrderItems {
 		// TODO Auto-generated constructor stub
 	}
 
+	//Only item id constructor
+	public OrderItems(int itemId) {
+		super();
+		this.itemId = itemId;
+	}
+	
 	//No ID constructor
 	public OrderItems(int orderId, int itemId, int quantity) {
 		super();
@@ -70,5 +76,12 @@ public class OrderItems {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	@Override
+	public String toString() {
+		return "OrderItems [id=" + id + ", orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + "]";
+	}
+	
+	
 
 }

@@ -17,7 +17,7 @@
 <tr th:each="currentDepartment : ${departments}" >
 <td th:text="${currentDepartment.getDepartmentId()}" />
 <td th:text="${currentDepartment.getDepartmentName()}" />
- <td><a th:href="@{/view/{id}(id=${currentDepartment.getDepartmentId()})}">Edit</a></td>
+ <td><a th:href="@{/viewDept/{id}(id=${currentDepartment.getDepartmentId()})}">View</a></td>
 </tr>
 </table>
 <a href="../">Home</a><br />

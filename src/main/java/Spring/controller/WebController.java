@@ -16,7 +16,9 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
+import Spring.beans.Customer;
 import Spring.beans.MenuItems;
+import Spring.beans.OrderItems;
 import Spring.beans.Orders;
 
 @Controller
@@ -46,10 +48,14 @@ public class WebController {
 		return "index";
 	}
 	
+	
+	
 	@GetMapping("/adminportal") 
 		public String goToAdminPortal() {
 			return "adminPortal";
 		}
+	
+/********************************Menu Related Edits**********************/
 	
 	@GetMapping("/viewMenu")
 	public String menuInit(Model model) {
@@ -57,7 +63,7 @@ public class WebController {
 		return "viewMenu";
 	}
 	
-	@GetMapping("/view/{id}")
+	@GetMapping("/viewDept/{id}")
 	public String showThisDept(@PathVariable("id") long id, Model model) {
 		model.addAttribute("menuItems", menuRepo.findByItemDepartment(id));
 		return "viewDept";
@@ -71,6 +77,19 @@ public class WebController {
 		model.addAttribute("orders", oRepo.findAll());
 		return "viewOrders";
 	}
+	
+	
+	@GetMapping("/addOrderItem/{id}")
+	public String addOrderItem(@PathVariable("id") int id, Model model) {
+		OrderItems oi = new OrderItems(id);
+		model.addAttribute("addOrderItem", oi);
+		oi.setQuantity(1);
+		oi.setOrderId(1); //Placeholder until we have login functionality
+						  //Must have an order in database to work
+		oiRepo.save(oi);
+		return "customerportal";
+	}
+	
 	
 	@GetMapping("/editOrder/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
@@ -100,10 +119,42 @@ public class WebController {
 		menuRepo.save(mi);
 		return "adminPortal";
 	}
+
+	
+	
+/****************************Login Related Edits*********************************************/
+	@GetMapping("/loginUser/{username}")
+	public String validateUser(@ModelAttribute Customer c, Model model) {
+		if(c.getAuth() == "ADMIN") {
+		return "adminPortal";
+		}else if(c.getAuth() == "CUSTOMER") {
+		return "customerportal";
+		}else {
+			return "index";
+		}
+	}
+	
+	@GetMapping("/login")
+	public String goToLogin() {
+		return "login";
+	}
 	/*@GetMapping("/editMenu/{id}")
 	public String showMenuUpdateForm(@PathVariable("id") long id, Model model) {
 		MenuItems i = menuRepo.find
 	}*/
 	
+	@GetMapping("/inputMenuItem")
+	public String addNewMenuItem(Model model) {
+		MenuItems mi = new MenuItems();
+		model.addAttribute("newMenuItem", mi);
+		return "insertMenuItem";
+	}
+	
+	@PostMapping("/inputMenuItem")
+	public String addNewMenuItem(@ModelAttribute MenuItems mi, Model model) {
+		menuRepo.save(mi);
+		return "adminPortal";
+
+	}
 	
 }
