@@ -119,6 +119,12 @@ public class WebController {
 		menuRepo.save(mi);
 		return "adminPortal";
 	}
+	
+	@GetMapping("/viewMenuItems")
+	public String viewAllItems(Model model) {
+		model.addAttribute("menuItems", menuRepo.findAll());
+		return "adminViewMenu";
+	}
 
 	
 	
