@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Menu View</title>
+</head>
+<body>
+<table>
+	<tr th:each="currentItem: ${menuItems}">
+	<td><input type=radio th:value="${currentItem.getId()}"></td>
+	<td><p><strong>ID: </strong></p></td>
+	<td th:text="${currentItem.getId()}" />
+	<td><p><strong>Item Name: </strong></p></td>
+	<td th:text="${currentItem.getItemName()}" />
+	<td><p><strong>Item Price: $</strong></p></td>
+	<td th:text="${currentItem.getItemPrice()}" />
+	<td><p><strong>Item Path: </strong></p></td>
+	<td th:text="${currentItem.getItemPath()}" />
+	<td><p><strong>Item Description: </strong></p></td>
+	<td th:text="${currentItem.getItemDescription()}" />
+	<td><p><strong>Item Department: </strong></p></td>
+	<td th:text="${currentItem.getItemDepartment()}" />
+</table>
+<a href="/adminEdit/{id}(id=${currentItem.getId()})">Edit Item</a><br/><br/>
+<a href="/adminDelete/{id}(id=${currentItem.getId()})">Delete Item</a>
+</body>
+</html>
