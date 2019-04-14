@@ -23,7 +23,13 @@
 	<span th:if="${#fields.hasErrors('itemDescription')}" th:errors="*{itemDescription}"></span><br/>
 	
 	<label for="ownerName">Item Department:</label>
-	<input type="text" th:field="*{itemDepartment}" id="itemDepartment">
+	<select th:field="*{itemDepartment}">
+		<option th:each="department: ${deptList}"
+		th:value="${department.getDepartmentId()}"
+		th:text="${department.getDepartmentName()}" >
+		</option>
+	</select>
+<!-- 	<input type="text" th:field="*{itemDepartment}" id="itemDepartment"> -->
 	<span th:if="${#fields.hasErrors('itemDepartment')}" th:errors="*{itemDepartment}"></span><br/>
 	
 	<input type="submit" value="Update Item">

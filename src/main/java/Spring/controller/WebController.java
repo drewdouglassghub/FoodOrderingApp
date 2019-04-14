@@ -131,6 +131,7 @@ public class WebController {
 		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
 		
 		model.addAttribute("menuItem", mi);
+		model.addAttribute("deptList" , deptRepo.findAll());
 		return "adminEdit";
 	}
 	
@@ -182,6 +183,7 @@ public class WebController {
 	public String addNewMenuItem(Model model) {
 		MenuItems mi = new MenuItems();
 		model.addAttribute("newMenuItem", mi);
+		model.addAttribute("deptList", deptRepo.findAll());
 		return "insertMenuItem";
 	}
 	
