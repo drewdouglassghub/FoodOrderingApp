@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Update Pet</title>
+</head>
+<body>
+<form action="#" th:action="@{/adminEdit/{id}(id=${menuItem.id})}" th:object="${menuItem}" method="post">
+	<label for="name">Item Name:</label>
+	<input type="text" th:field="*{itemName}" id="itemName">
+	<span th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></span><br/>
+	
+	<label for="animal">Item Price:</label>
+	<input type="text" th:field="*{itemPrice}" id="itemPrice">
+	<span th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></span><br/>
+	
+	<label for="color">Image Path:</label>
+	<input type="text" th:field="*{itemPath}" id="itemPath">
+	<span th:if="${#fields.hasErrors('itemPath')}" th:errors="*{itemPath}"></span><br/>
+	
+	<label for="age">Item Description:</label>
+	<input type="text" th:field="*{itemDescription}" id="itemDescription">
+	<span th:if="${#fields.hasErrors('itemDescription')}" th:errors="*{itemDescription}"></span><br/>
+	
+	<label for="ownerName">Item Department:</label>
+	<input type="text" th:field="*{itemDepartment}" id="itemDepartment">
+	<span th:if="${#fields.hasErrors('itemDepartment')}" th:errors="*{itemDepartment}"></span><br/>
+	
+	<input type="submit" value="Update Item">
+</form>
+</body>
+</html>

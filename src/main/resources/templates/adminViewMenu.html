@@ -7,21 +7,22 @@
 <body>
 <table>
 	<tr th:each="currentItem: ${menuItems}">
-	<td><input type=radio th:value="${currentItem.getId()}"></td>
-	<td><p><strong>ID: </strong></p></td>
-	<td th:text="${currentItem.getId()}" />
-	<td><p><strong>Item Name: </strong></p></td>
-	<td th:text="${currentItem.getItemName()}" />
-	<td><p><strong>Item Price: $</strong></p></td>
-	<td th:text="${currentItem.getItemPrice()}" />
-	<td><p><strong>Item Path: </strong></p></td>
-	<td th:text="${currentItem.getItemPath()}" />
-	<td><p><strong>Item Description: </strong></p></td>
-	<td th:text="${currentItem.getItemDescription()}" />
-	<td><p><strong>Item Department: </strong></p></td>
-	<td th:text="${currentItem.getItemDepartment()}" />
+		<td><p><strong>ID: </strong></p></td>
+		<td th:text="${currentItem.getId()}" />
+		<td><p><strong>Item Name: </strong></p></td>
+		<td th:text="${currentItem.getItemName()}" />
+		<td><p><strong>Item Price: $</strong></p></td>
+		<td th:text="${currentItem.getItemPrice()}" />
+		<td><p><strong>Item Path: </strong></p></td>
+		<td th:text="${currentItem.getItemPath()}" />
+		<td><p><strong>Item Description: </strong></p></td>
+		<td th:text="${currentItem.getItemDescription()}" />
+		<td><p><strong>Item Department: </strong></p></td>
+		<td th:text="${currentItem.getItemDepartment()}" />
+		<td><a th:href="@{/adminEdit/{id}(id=${currentItem.id})}">Edit Item</a></td>
+		<td><a th:href="@{/adminDelete/{id}(id=${currentItem.id})}">Delete Item</a></td>
+	</tr>
 </table>
-<a href="/adminEdit/{id}(id=${currentItem.getId()})">Edit Item</a><br/><br/>
-<a href="/adminDelete/{id}(id=${currentItem.getId()})">Delete Item</a>
+<a href="../adminportal">Return to Menu</a>
 </body>
 </html>

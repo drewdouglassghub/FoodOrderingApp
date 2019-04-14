@@ -125,6 +125,35 @@ public class WebController {
 		model.addAttribute("menuItems", menuRepo.findAll());
 		return "adminViewMenu";
 	}
+	
+	@GetMapping("/adminEdit/{id}")
+	public String showMenuItemUpdateForm(@PathVariable("id") long id, Model model) {
+		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
+		
+		model.addAttribute("menuItem", mi);
+		return "adminEdit";
+	}
+	
+	@PostMapping("adminEdit/{id}")
+	public String updateMenuItem(@PathVariable("id") long id, @Valid MenuItems mi, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			mi.setId(id);
+			return "adminEdit";
+		}
+		
+		menuRepo.save(mi);
+		model.addAttribute("menuItems", menuRepo.findAll());
+		return "adminViewMenu";
+	}
+	
+	@GetMapping("adminDelete/{id}")
+	public String deleteMenuItem(@PathVariable("id") long id, Model model) {
+		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
+		
+		menuRepo.delete(mi);
+		model.addAttribute("menuItems", menuRepo.findAll());
+		return "adminViewMenu";
+	}
 
 	
 	
