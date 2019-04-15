@@ -11,7 +11,13 @@
 		 Price:<input name="itemPrice" size="10"><br /> 
 		 IMG Path:<input name="itemPath" size="20"><br /> 
 		 Description:<input name="itemDescription" size="30"><br /> 
-		 Department:<input name="itemDepartment" size="20"><br /> 
+		 Department:
+		 <select th:field="*{itemDepartment}">
+		 	<option th:each="department: ${deptList}" 
+		 	th:value="${department.getDepartmentId()}" 
+		 	th:text="${department.getDepartmentName()}">
+		 	</option>
+		 </select>
 		 <br /> <input name="submit" type="submit" value="submit" />
 	</form>
 </body>

@@ -2,9 +2,12 @@ package Spring.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,14 +24,15 @@ public class MenuItems {
 	private String itemPath;
 	@Column(name="ITEM_DESCRIPTION")
 	private String itemDescription;
-	@Column(name="DEPARTMENT")
-	private long itemDepartment;
+	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@JoinColumn(name="DEPARTMENT")
+	private MenuDepartments itemDepartment;
 	
 	public MenuItems() {
 		super();
 	}
 	
-	public MenuItems(long id, String itemName, double itemPrice, String itemDescription, long itemDepartment) {
+	public MenuItems(long id, String itemName, double itemPrice, String itemDescription, MenuDepartments itemDepartment) {
 		super();
 		this.itemId = id;
 		this.itemName = itemName;
@@ -37,7 +41,7 @@ public class MenuItems {
 		this.itemDepartment = itemDepartment;
 	}
 	
-	public MenuItems(long id, String itemName, double itemPrice, String itemPath, String itemDescription, long itemDepartment) {
+	public MenuItems(long id, String itemName, double itemPrice, String itemPath, String itemDescription, MenuDepartments itemDepartment) {
 		super();
 		this.itemId = id;
 		this.itemName = itemName;
@@ -88,16 +92,16 @@ public class MenuItems {
 		this.itemDescription = itemDescription;
 	}
 
-	public long getItemDepartment() {
+	public MenuDepartments getItemDepartment() {
 		return itemDepartment;
 	}
 
-	public void setItemDepartment(long itemDepartment) {
+	public void setItemDepartment(MenuDepartments itemDepartment) {
 		this.itemDepartment = itemDepartment;
 	}
 	
 	@Override
 	public String toString() {
-		return "MenuItem [id = " + itemId + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment + "]";
+		return "MenuItem [id = " + itemId + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment.getDepartmentName() + "]";
 	}
 }

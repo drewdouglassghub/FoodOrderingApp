@@ -20,6 +20,10 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
+
+import Spring.beans.Customer;
+import Spring.beans.MenuDepartments;
+
 import Spring.beans.MenuItems;
 import Spring.beans.OrderItems;
 import Spring.beans.Orders;
@@ -72,7 +76,7 @@ public class WebController {
 	}
 	
 	@GetMapping("/viewDept/{id}")
-	public String showThisDept(@PathVariable("id") long id, Model model) {
+	public String showThisDept(@PathVariable("id") MenuDepartments id, Model model) {
 		model.addAttribute("menuItems", menuRepo.findByItemDepartment(id));
 		return "viewDept";
 	}
@@ -133,7 +137,37 @@ public class WebController {
 		model.addAttribute("menuItems", menuRepo.findAll());
 		return "adminViewMenu";
 	}
+
+	@GetMapping("/adminEdit/{id}")
+	public String showMenuItemUpdateForm(@PathVariable("id") long id, Model model) {
+		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
+		
+		model.addAttribute("menuItem", mi);
+		model.addAttribute("deptList" , deptRepo.findAll());
+		return "adminEdit";
+	}
 	
+	@PostMapping("adminEdit/{id}")
+	public String updateMenuItem(@PathVariable("id") long id, @Valid MenuItems mi, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			mi.setId(id);
+			return "adminEdit";
+		}
+		
+		menuRepo.save(mi);
+		model.addAttribute("menuItems", menuRepo.findAll());
+		return "adminViewMenu";
+	}
+	
+	@GetMapping("adminDelete/{id}")
+	public String deleteMenuItem(@PathVariable("id") long id, Model model) {
+		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
+		
+		menuRepo.delete(mi);
+		model.addAttribute("menuItems", menuRepo.findAll());
+		return "adminViewMenu";
+	}
+
 /***************************Cart Related Edits*********************************************/
 
 
@@ -190,6 +224,7 @@ public class WebController {
 	public String addNewMenuItem(Model model) {
 		MenuItems mi = new MenuItems();
 		model.addAttribute("newMenuItem", mi);
+		model.addAttribute("deptList", deptRepo.findAll());
 		return "insertMenuItem";
 	}
 	
@@ -198,6 +233,25 @@ public class WebController {
 		menuRepo.save(mi);
 		return "adminPortal";
 
+	}
+	
+	@GetMapping("/inputDepartment")
+	public String addNewDepartment(Model model) {
+		MenuDepartments md = new MenuDepartments();
+		model.addAttribute("newDepartmentItem", md);
+		return "inputDepartment";
+	}
+	
+	@PostMapping("/inputDepartment")
+	public String addnewDepartmentItem(@ModelAttribute MenuDepartments md, Model model) {
+		deptRepo.save(md);
+		return "adminportal";
+	}
+	
+	@GetMapping("viewDepartmentItems")
+	public String getDepartmentItems(Model model) {
+		model.addAttribute("departments", deptRepo.findAll());
+		return "adminViewDepartments";
 	}
 	
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Department View</title>
+</head>
+<body>
+	<table>
+		<tr th:each="department: ${departments}">
+			<td><p><strong>Department ID: </strong></p></td>
+			<td th:text="${department.getDepartmentId()}" />
+			<td><p><strong>Department Name: </strong></p></td>
+			<td th:text="${department.getDepartmentName()}" />
+			<td><a th:href="@{/adminDeptEdit/{id}(id=${department.departmentId})}">Edit</a></td>
+			<td><a th:href="@{/adminDeptDelete/{id}(id=${department.getDepartmentName()})}">Delete</a></td>
+		</tr>
+	</table>
+<a href="../adminportal">Return to Menu</a>
+</body>
+</html>
