@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import Spring.Repository.CartRepository;
 import Spring.Repository.CustomerRepository;
 import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
-import Spring.beans.Customer;
 import Spring.beans.MenuItems;
 import Spring.beans.OrderItems;
 import Spring.beans.Orders;
+import Spring.beans.User;
 
 @Controller
 public class WebController {
@@ -38,6 +42,11 @@ public class WebController {
 	@Autowired
 	OrdersRepository oRepo;
 	
+	@Autowired
+	CartRepository cartRepo;
+	
+//****************************************************************************************************************//
+	
 	@GetMapping("/customerportal")
 	public String goToPortal() {
 		return "customerportal";
@@ -45,11 +54,10 @@ public class WebController {
 	
 	@GetMapping("../")
 	public String goToHome() {
-		return "index";
+		return "login";
 	}
 	
-	
-	
+		
 	@GetMapping("/adminportal") 
 		public String goToAdminPortal() {
 			return "adminPortal";
@@ -125,20 +133,49 @@ public class WebController {
 		model.addAttribute("menuItems", menuRepo.findAll());
 		return "adminViewMenu";
 	}
+	
+/***************************Cart Related Edits*********************************************/
+
 
 	
 	
+	
+	
 /****************************Login Related Edits*********************************************/
-	@GetMapping("/loginUser/{username}")
-	public String validateUser(@ModelAttribute Customer c, Model model) {
-		if(c.getAuth() == "ADMIN") {
-		return "adminPortal";
-		}else if(c.getAuth() == "CUSTOMER") {
-		return "customerportal";
-		}else {
-			return "index";
+	@RequestMapping(value="loginUser", method=RequestMethod.POST)
+	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, Model model){
+		
+		try {
+		User u = cRepo.findByUserName(username);		
+		model.addAttribute("user", u);
+		
+		if(u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN") ) {
+			
+			return "viewAdmin";
+			
+			}else if(u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")){
+				
+				return "viewCustomer";		
+		}
+		else {
+		
+		return "login";
+		}
+		}
+		catch(Exception e){
+			return "loginError";
 		}
 	}
+
+	
+	/*@PostMapping("/loginUser/{username}")
+	public String showUser(@PathVariable("username") String username, Model model) {
+	User u = cRepo.findByUserName(username);
+		model.addAttribute("user", u);
+			
+		return "viewUser";
+	}*/
+	
 	
 	@GetMapping("/login")
 	public String goToLogin() {
