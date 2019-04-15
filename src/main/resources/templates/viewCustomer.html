@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Customer Profile</title>
+</head>
+<body>
+
+
+	<div class="container">
+	
+<table>
+<thead>
+    <tr>
+        <th>First Name: </th>
+        <th>Latest Visit: </th>
+        <th>Email: </th>
+        <th>Phone: </th>
+    </tr>
+</thead>
+<tr th:each="currentUser : ${user}" >
+<td th:text="${currentUser.getFirstName()}" />
+<td th:text="${currentUser.getVisitDate()}" />
+<td th:text="${currentUser.getEmail()}" />
+<td th:text="${currentUser.getPhoneNumber()}" />
+</tr>
+</table>
+<a href="/customerportal">Customer Portal</a><br/>
+</div>
+</body>
+</html>
