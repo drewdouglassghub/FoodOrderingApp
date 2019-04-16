@@ -242,11 +242,13 @@ public class WebController {
 				user.setUserAuth(u.getUserAuth());
 				return "viewCustomer";
 			} else {
-
-
+			return "loginError";
+			}
+		}catch (Exception e) {
 			return "loginError";
 		}
 	}
+	
 
 	
 	/*@PostMapping("/loginUser/{username}")
