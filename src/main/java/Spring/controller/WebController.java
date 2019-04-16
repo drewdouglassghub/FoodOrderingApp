@@ -22,7 +22,6 @@ import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
 
-import Spring.beans.Customer;
 import Spring.beans.MenuDepartments;
 
 import Spring.beans.MenuItems;
@@ -33,6 +32,13 @@ import Spring.beans.User;
 @Controller
 @SessionAttributes("user")
 public class WebController {
+
+	  @ModelAttribute("user")
+	   public User setUpUserForm() {
+	      return new User();
+	   }
+	
+	
 	@Autowired
 	MenuDepartmentsRepository deptRepo;
 	
@@ -54,8 +60,13 @@ public class WebController {
 //****************************************************************************************************************//
 	
 	@GetMapping("/customerportal")
-	public String goToPortal() {
-		return "customerportal";
+	public String goToPortal(User user, Model model) {
+		model.addAttribute("user", user);
+		if(user.getUserAuth().equals("CUSTOMER")) {
+			return "customerportal";
+		}else {
+			return "login";
+		}
 	}
 	
 	@GetMapping("../")
@@ -65,10 +76,15 @@ public class WebController {
 	
 		
 	@GetMapping("/adminportal") 
-		public String goToAdminPortal() {
+		public String goToAdminPortal(User user, Model model) {
+		model.addAttribute("user", user);
+		if(user.getUserAuth().equals("ADMIN")) {
 			return "adminPortal";
+		}else {
+			model.addAttribute("message", "User not authorized");
+			return "login";
 		}
-	
+	}
 /********************************Menu Related Edits**********************/
 	
 	@GetMapping("/viewMenu")
@@ -87,9 +103,14 @@ public class WebController {
 /************************Order Related Edits******************************/
 	
 	@GetMapping("/viewOrders")
-	public String viewOrderList(Model model) {
+	public String viewOrderList(User user, Model model) {
 		model.addAttribute("orders", oRepo.findAll());
-		return "viewOrders";
+		model.addAttribute("user", user);
+		if(user.getUserAuth().equals("ADMIN")) {
+			return "viewOrders";
+		}else {
+			return "login";
+		}
 	}
 	
 	
@@ -129,9 +150,14 @@ public class WebController {
 /************************Admin Related Edits******************************/	
 
 	@GetMapping("/addItem")
-	public String addNewItem(@ModelAttribute MenuItems mi, Model model) {
-		menuRepo.save(mi);
-		return "adminPortal";
+	public String addNewItem(@ModelAttribute MenuItems mi, User user, Model model) {
+		model.addAttribute("user", user);
+		if(user.getUserAuth().equals("ADMIN")) {
+			menuRepo.save(mi);
+			return "adminPortal";
+		}else {
+			return "login";
+		}		
 	}
 	
 	@GetMapping("/viewMenuItems")
@@ -180,18 +206,32 @@ public class WebController {
 /****************************Login Related Edits*********************************************/
 	@RequestMapping(value = "loginUser", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-			Model model) {
+			@ModelAttribute("user") User user, Model model) {
 
 		try {
 			User u = cRepo.findByUserName(username);
-			model.addAttribute("user", u);
+			model.addAttribute("tempUser", u);
 
 			if (u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN")) {
-
+				model.addAttribute("user", user);
+				user.setFirstName(u.getFirstName());
+				user.setLastName(u.getLastName());
+				user.setVisitDate(u.getVisitDate());
+				user.setLastName(u.getEmail());
+				user.setLastName(u.getPhoneNumber());
+				user.setLastName(u.getUserName());
+				user.setUserAuth(u.getUserAuth());
 				return "viewAdmin";
 
 			} else if (u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")) {
-
+				model.addAttribute("user", user);
+				user.setFirstName(u.getFirstName());
+				user.setLastName(u.getLastName());
+				user.setVisitDate(u.getVisitDate());
+				user.setEmail(u.getEmail());
+				user.setPhoneNumber(u.getPhoneNumber().toString());
+				user.setUserName(u.getUserName());
+				user.setUserAuth(u.getUserAuth());
 				return "viewCustomer";
 			} else {
 
@@ -202,10 +242,6 @@ public class WebController {
 		}
 	}
 
-	  @ModelAttribute("user")
-	   public User setUpUserForm() {
-	      return new User();
-	   }
 	
 	/*@PostMapping("/loginUser/{username}")
 	public String showUser(@PathVariable("username") String username, Model model) {
