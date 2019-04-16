@@ -87,7 +87,7 @@ public class WebController {
 			return "adminPortal";
 		}else {
 			model.addAttribute("message", "User not authorized");
-			return "login";
+			return "/login";
 		}
 	}
 /********************************Menu Related Edits**********************/
@@ -203,11 +203,18 @@ public class WebController {
 
 /***************************Cart Related Edits*********************************************/
 	@GetMapping("/viewCart/{id}")
-	public String viewCart(@PathVariable("id") User id, Model model) {
+	public String viewCart(@PathVariable("id") User id, User user, Model model) {
 		//Cart ca = cartRepo.findByUserId(id);
+		model.addAttribute("user", user);
 		model.addAttribute("cart", cartRepo.findByUserId(id));
-		return "viewCart";
+		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
+			return "viewCart";
+		}else {
+			model.addAttribute("message", "Please sign in to view your cart.");
+			return "/login";
+		}		
 	}
+	
 
 	
 	
@@ -248,7 +255,7 @@ public class WebController {
 			return "loginError";
 			}
 		}catch (Exception e) {
-			return "loginError";
+			return "/loginError";
 		}
 	}
 	
