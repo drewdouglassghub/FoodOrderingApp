@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Spring.Repository.CartRepository;
 import Spring.Repository.CustomerRepository;
@@ -26,6 +27,7 @@ import Spring.beans.Orders;
 import Spring.beans.User;
 
 @Controller
+@SessionAttributes("user")
 public class WebController {
 	@Autowired
 	MenuDepartmentsRepository deptRepo;
@@ -142,31 +144,34 @@ public class WebController {
 	
 	
 /****************************Login Related Edits*********************************************/
-	@RequestMapping(value="loginUser", method=RequestMethod.POST)
-	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, Model model){
-		
+	@RequestMapping(value = "loginUser", method = RequestMethod.POST)
+	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+			Model model) {
+
 		try {
-		User u = cRepo.findByUserName(username);		
-		model.addAttribute("user", u);
-		
-		if(u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN") ) {
-			
-			return "viewAdmin";
-			
-			}else if(u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")){
-				
-				return "viewCustomer";		
-		}
-		else {
-		
-		return "login";
-		}
-		}
-		catch(Exception e){
+			User u = cRepo.findByUserName(username);
+			model.addAttribute("user", u);
+
+			if (u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN")) {
+
+				return "viewAdmin";
+
+			} else if (u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")) {
+
+				return "viewCustomer";
+			} else {
+
+				return "login";
+			}
+		} catch (Exception e) {
 			return "loginError";
 		}
 	}
 
+	  @ModelAttribute("user")
+	   public User setUpUserForm() {
+	      return new User();
+	   }
 	
 	/*@PostMapping("/loginUser/{username}")
 	public String showUser(@PathVariable("username") String username, Model model) {
