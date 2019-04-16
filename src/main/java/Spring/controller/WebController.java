@@ -217,7 +217,7 @@ public class WebController {
 
 		try {
 
-			User u = cRepo.findByUserName(username);
+			User u = uRepo.findByUserName(username);
 			model.addAttribute("tempUser", u);
 
 			if (u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN")) {
