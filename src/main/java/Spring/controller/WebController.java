@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import Spring.Repository.CartRepository;
-import Spring.Repository.CustomerRepository;
+import Spring.Repository.UserRepository;
 import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
-
-import Spring.beans.Customer;
+import Spring.beans.Cart;
 import Spring.beans.MenuDepartments;
 
 import Spring.beans.MenuItems;
@@ -38,7 +37,7 @@ public class WebController {
 	MenuItemsRepository menuRepo;
 	
 	@Autowired
-	CustomerRepository cRepo;
+	UserRepository uRepo;
 	
 	@Autowired
 	OrderItemsRepository oiRepo;
@@ -169,7 +168,13 @@ public class WebController {
 	}
 
 /***************************Cart Related Edits*********************************************/
-
+	@GetMapping("/viewCart/{id}")
+	public String viewCart(@PathVariable("id") long id, Model model) {
+		Cart ca = cartRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Cart Id: " + id));
+		ca.setCartId(id);
+		model.addAttribute("cart", ca);
+		return "viewCart";
+	}
 
 	
 	
@@ -180,7 +185,7 @@ public class WebController {
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, Model model){
 		
 		try {
-		User u = cRepo.findByUserName(username);		
+		User u = uRepo.findByUserName(username);		
 		model.addAttribute("user", u);
 		
 		if(u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN") ) {
