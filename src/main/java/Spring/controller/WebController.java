@@ -169,10 +169,9 @@ public class WebController {
 
 /***************************Cart Related Edits*********************************************/
 	@GetMapping("/viewCart/{id}")
-	public String viewCart(@PathVariable("id") long id, Model model) {
-		Cart ca = cartRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Cart Id: " + id));
-		ca.setCartId(id);
-		model.addAttribute("cart", ca);
+	public String viewCart(@PathVariable("id") User id, Model model) {
+		//Cart ca = cartRepo.findByUserId(id);
+		model.addAttribute("cart", cartRepo.findByUserId(id));
 		return "viewCart";
 	}
 
