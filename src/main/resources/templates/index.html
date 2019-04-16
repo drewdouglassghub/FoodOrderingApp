@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Food Ordering App</title>
 </head>
 <body>
+
+<span th:text="${message}"></span>
 <a href="customerportal">Customer Portal</a><br/>
 <a href="adminportal">Admin Portal</a>
 </body>

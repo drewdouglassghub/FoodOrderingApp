@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Administrator Portal</title>
 </head>
 <body>
+
+<p th:text=${user.getUserName()}></p>
 <a href="../inputDepartment">Add Department</a><br/>
 <a href="../viewDepartmentItems">View Current Departments</a><br/>
 <a href="../inputMenuItem">Add Menu Items</a><br/>
@@ -12,5 +14,6 @@
 <a href="">Update Order Status</a><br/>
 <a href="">View Current Orders</a><br/>
 <a href="">View Promotions</a><br/>
+<a href="/logout">Logout</a>
 </body>
 </html>

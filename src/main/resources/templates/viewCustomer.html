@@ -18,14 +18,15 @@
         <th>Phone: </th>
     </tr>
 </thead>
-<tr th:each="currentUser : ${user}" >
-<td th:text="${currentUser.getFirstName()}" />
-<td th:text="${currentUser.getVisitDate()}" />
-<td th:text="${currentUser.getEmail()}" />
-<td th:text="${currentUser.getPhoneNumber()}" />
+<tr >
+<td th:text="${user.getFirstName()}" />
+<td th:text="${user.getVisitDate()}" />
+<td th:text="${user.getEmail()}" />
+<td th:text="${user.getPhoneNumber()}" />
 </tr>
 </table>
 <a href="/customerportal">Customer Portal</a><br/>
+<a href="/logout">Logout</a>
 </div>
 </body>
 </html>

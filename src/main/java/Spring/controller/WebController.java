@@ -1,5 +1,6 @@
 package Spring.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import Spring.Repository.CartRepository;
 import Spring.Repository.UserRepository;
@@ -64,9 +66,10 @@ public class WebController {
 	@GetMapping("/customerportal")
 	public String goToPortal(User user, Model model) {
 		model.addAttribute("user", user);
-		if(user.getUserAuth().equals("CUSTOMER")) {
+		if(user.getUserAuth().equals("CUSTOMER") || user.getUserAuth().equals("ADMIN")) {
 			return "customerportal";
 		}else {
+			model.addAttribute("message", "User not authorized");
 			return "login";
 		}
 	}
@@ -225,9 +228,9 @@ public class WebController {
 				user.setFirstName(u.getFirstName());
 				user.setLastName(u.getLastName());
 				user.setVisitDate(u.getVisitDate());
-				user.setLastName(u.getEmail());
-				user.setLastName(u.getPhoneNumber());
-				user.setLastName(u.getUserName());
+				user.setEmail(u.getEmail());
+				user.setPhoneNumber(u.getPhoneNumber());
+				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
 				return "viewAdmin";
 
@@ -249,6 +252,15 @@ public class WebController {
 		}
 	}
 	
+	 @RequestMapping(value = "/logout", method = RequestMethod.GET)
+	    public String page4(@ModelAttribute User user, HttpSession session, SessionStatus status, Model model) {
+	        //uRepo.save(user);
+	        status.setComplete();
+	        session.removeAttribute("user");
+	        model.addAttribute("message", "Logged out. Thank you for visiting.");
+	        return "/login";
+	    }
+
 
 	
 	/*@PostMapping("/loginUser/{username}")
