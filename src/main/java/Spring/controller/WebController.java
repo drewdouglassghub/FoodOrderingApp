@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Spring.Repository.CartRepository;
-import Spring.Repository.CustomerRepository;
+import Spring.Repository.UserRepository;
 import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
+
+import Spring.beans.Cart;
 
 import Spring.beans.MenuDepartments;
 
@@ -46,7 +48,7 @@ public class WebController {
 	MenuItemsRepository menuRepo;
 	
 	@Autowired
-	CustomerRepository cRepo;
+	UserRepository uRepo;
 	
 	@Autowired
 	OrderItemsRepository oiRepo;
@@ -197,7 +199,12 @@ public class WebController {
 	}
 
 /***************************Cart Related Edits*********************************************/
-
+	@GetMapping("/viewCart/{id}")
+	public String viewCart(@PathVariable("id") User id, Model model) {
+		//Cart ca = cartRepo.findByUserId(id);
+		model.addAttribute("cart", cartRepo.findByUserId(id));
+		return "viewCart";
+	}
 
 	
 	
@@ -209,6 +216,7 @@ public class WebController {
 			@ModelAttribute("user") User user, Model model) {
 
 		try {
+
 			User u = cRepo.findByUserName(username);
 			model.addAttribute("tempUser", u);
 
@@ -235,9 +243,7 @@ public class WebController {
 				return "viewCustomer";
 			} else {
 
-				return "login";
-			}
-		} catch (Exception e) {
+
 			return "loginError";
 		}
 	}
