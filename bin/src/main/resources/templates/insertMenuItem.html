@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert Menu Item</title>
+</head>
+<body>
+	<form name='f' th:object="${newMenuItem}" th:action="@{/inputMenuItem}"
+		method='POST'>
+
+		Item Name:<input name="itemName" size="20"> <br /> 
+		 Price:<input name="itemPrice" size="10"><br /> 
+		 IMG Path:<input name="itemPath" size="20"><br /> 
+		 Description:<input name="itemDescription" size="30"><br /> 
+		 Department:
+		 <select th:field="*{itemDepartment}">
+		 	<option th:each="department: ${deptList}" 
+		 	th:value="${department.getDepartmentId()}" 
+		 	th:text="${department.getDepartmentName()}">
+		 	</option>
+		 </select>
+		 <br /> <input name="submit" type="submit" value="submit" />
+	</form>
+</body>
+</html>

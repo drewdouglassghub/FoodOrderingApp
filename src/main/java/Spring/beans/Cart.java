@@ -12,11 +12,13 @@ public class Cart {
 	@Id
 	@Column(name="cart_id")
 	private long cartId;
-	@Column(name="prod_name")
-	private String productName;
-	@Column(name="prod_qty")
+//	@Column(name="prod_name")
+//	private String productName;
+	@Column(name="item_id")
+	private int itemId;
+	@Column(name="item_qty")
 	private int productQty;
-	@Column(name="customer_id")
+	@Column(name="user_id")
 	private long custId;
 	
 	public Cart() {
@@ -26,7 +28,7 @@ public class Cart {
 	public Cart(long cartId, String productName, int productQty, long custId) {
 		super();
 		this.cartId = cartId;
-		this.productName = productName;
+//		this.productName = productName;
 		this.productQty = productQty;
 		this.custId = custId;
 	}
@@ -39,12 +41,20 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public String getProductName() {
-		return productName;
+//	public String getProductName() {
+//		return productName;
+//	}
+//
+//	public void setProductName(String productName) {
+//		this.productName = productName;
+//	}
+
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	public int getProductQty() {
@@ -65,7 +75,7 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [cartId=" + cartId + ", productName=" + productName + ", productQty=" + productQty + ", custId="
+		return "Cart [cartId=" + cartId + /*", productName=" + productName +*/ ", productQty=" + productQty + ", custId="
 				+ custId + "]";
 	}
 	

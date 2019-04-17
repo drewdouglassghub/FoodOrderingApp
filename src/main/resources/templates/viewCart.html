@@ -10,16 +10,18 @@
 <table>
 <thead>
     <tr>
-        <th>ID: </th>
-        <th>Item Name: </th>
-        <th>Description: </th>
+        <th>Cart ID: </th>
+        <th>Item ID: </th>
+        <th>Item QTY: </th>
+        <th>Guest ID: </th>
     </tr>
 </thead>
-<tr th:each="currentMenuItem : ${menuItems}" >
-<td th:text="${currentMenuItem.getId()}" />
-<td th:text="${currentMenuItem.getItemName()}" />
-<td th:text="${currentMenuItem.getItemDescription()}" />
-  <td><a th:href="@{/addOrderItem/{id}(id=${currentMenuItem.getId()})}">Add to cart</a></td>
+<tr th:each="currentCart : ${Cart}" >
+<td th:text="${currentCart.getCartId()}" />
+<!--  <td th:text="${currentCart.getProductName()}" />  -->
+<td th:text="${currentCart.getItemId()}" />
+<td th:text="${currentCart.getProductQty()}" />
+<td th:text="${currentCart.getCustId()}" />
 </tr>
 </table>
 <a href="../">Home</a><br />

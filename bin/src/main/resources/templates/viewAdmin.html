@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>User Profile</title>
+</head>
+<body>
+	
+		<div class="container">
+<table>
+<thead>
+    <tr>
+        <th>ID: </th>
+        <th>First Name: </th>
+        <th>Last Name: </th>
+        <th>Latest Visit: </th>
+        <th>Email: </th>
+        <th>Phone: </th>
+        <th>User Name: </th>
+        <th>Password: </th>
+        <th>First Name: </th>
+    </tr>
+</thead>
+<tr th:each="currentUser : ${user}" >
+<td th:text="${currentUser.getUserId()}" />
+<td th:text="${currentUser.getFirstName()}" />
+<td th:text="${currentUser.getLastName()}" />
+<td th:text="${currentUser.getVisitDate()}" />
+<td th:text="${currentUser.getEmail()}" />
+<td th:text="${currentUser.getPhoneNumber()}" />
+<td th:text="${currentUser.getUserName()}" />
+<td th:text="${currentUser.getPassWord()}" />
+<td th:text="${currentUser.getUserAuth()}" />
+</tr>
+</table>
+<a href="/customerportal">Customer Portal</a><br/>
+<a href="/adminportal">Admin Portal</a>
+<a href="../">Home</a><br />
+</div>
+</body>
+</html>

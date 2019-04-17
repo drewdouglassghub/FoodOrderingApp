@@ -171,8 +171,12 @@ public class WebController {
 	}
 
 /***************************Cart Related Edits*********************************************/
-
-
+	
+	@GetMapping("/viewCart")
+	public String viewCart(Model model) {
+		model.addAttribute("Cart", cartRepo.findAll());
+		return "viewCart";
+	}
 	
 	
 	
