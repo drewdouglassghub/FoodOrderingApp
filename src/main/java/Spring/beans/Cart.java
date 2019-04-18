@@ -2,7 +2,10 @@ package Spring.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,24 +15,37 @@ public class Cart {
 	@Id
 	@Column(name="cart_id")
 	private long cartId;
+	@Column(name="order_id")
+	private long orderId;
+	@Column(name="prod_id")
+	private long prodId;
 	@Column(name="prod_name")
 	private String productName;
 	@Column(name="prod_qty")
 	private int productQty;
-	@Column(name="customer_id")
-	private long custId;
+	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@JoinColumn(name="USER_ID")
+	private User userId;
 	
 	public Cart() {
 		super();
 	}
 
-	public Cart(long cartId, String productName, int productQty, long custId) {
+	
+	
+
+	public Cart(long cartId, long orderId, long prodId, String productName, int productQty, User userId) {
 		super();
 		this.cartId = cartId;
+		this.orderId = orderId;
+		this.prodId = prodId;
 		this.productName = productName;
 		this.productQty = productQty;
-		this.custId = custId;
+		this.userId = userId;
 	}
+
+
+
 
 	public long getCartId() {
 		return cartId;
@@ -55,19 +71,41 @@ public class Cart {
 		this.productQty = productQty;
 	}
 
-	public long getCustId() {
-		return custId;
+
+	public long getOrderId() {
+		return orderId;
 	}
 
-	public void setCustId(long custId) {
-		this.custId = custId;
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
 	}
 
-	@Override
-	public String toString() {
-		return "Cart [cartId=" + cartId + ", productName=" + productName + ", productQty=" + productQty + ", custId="
-				+ custId + "]";
+
+	public long getProdId() {
+		return prodId;
 	}
+
+
+	public void setProdId(long prodId) {
+		this.prodId = prodId;
+	}
+
+
+
+
+	public User getUserId() {
+		return userId;
+	}
+
+
+
+
+	public void setUserId(User userId) {
+		this.userId = userId;
+	}
+
+
 	
 	
 	

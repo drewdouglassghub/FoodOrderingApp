@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <title>User Profile</title>
 </head>
 <body>
 	
-		<div class="container">
+		  <div class="container">
 <table>
 <thead>
     <tr>
@@ -18,7 +18,7 @@
         <th>Phone: </th>
         <th>User Name: </th>
         <th>Password: </th>
-        <th>First Name: </th>
+        <th>Authorization: </th>
     </tr>
 </thead>
 <tr th:each="currentUser : ${user}" >
@@ -29,13 +29,18 @@
 <td th:text="${currentUser.getEmail()}" />
 <td th:text="${currentUser.getPhoneNumber()}" />
 <td th:text="${currentUser.getUserName()}" />
-<td th:text="${currentUser.getPassWord()}" />
 <td th:text="${currentUser.getUserAuth()}" />
 </tr>
 </table>
+
+		<p>Welcome <span th:text=${user.getFirstName()}></span><br>
+        <p>Your last visit was on: </p><span th:text=${user.getVisitDate()}></span><br>
+        <p>Authorization: </p><span th:text=${user.getUserAuth()}></span><br>
+
 <a href="/customerportal">Customer Portal</a><br/>
 <a href="/adminportal">Admin Portal</a>
 <a href="../">Home</a><br />
+<a href="/logout">Logout</a><br/>
 </div>
 </body>
 </html>
