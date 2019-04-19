@@ -34,13 +34,14 @@ import Spring.beans.Orders;
 import Spring.beans.User;
 
 @Controller
-@SessionAttributes("user")
+@SessionAttributes({"user", "order"})
 public class WebController {
 
 	  @ModelAttribute("user")
 	   public User setUpUserForm() {
 	      return new User();
 	   }
+	  
 	
 	
 	@Autowired
@@ -64,8 +65,9 @@ public class WebController {
 //****************************************************************************************************************//
 	
 	@GetMapping("/customerportal")
-	public String goToPortal(User user, Model model) {
+	public String goToPortal(User user, Orders order, Model model) {
 		model.addAttribute("user", user);
+		model.addAttribute("order", order);
 		if(user.getUserAuth().equals("CUSTOMER") || user.getUserAuth().equals("ADMIN")) {
 			return "customerportal";
 		}else {
@@ -93,13 +95,17 @@ public class WebController {
 /********************************Menu Related Edits**********************/
 	
 	@GetMapping("/viewMenu")
-	public String menuInit(Model model) {
+	public String menuInit(User user, Orders order, Model model) {
+		model.addAttribute("user", user);
+		model.addAttribute("order", order);
 		model.addAttribute("departments", deptRepo.findAll());
 		return "viewMenu";
 	}
 	
 	@GetMapping("/viewDept/{id}")
-	public String showThisDept(@PathVariable("id") MenuDepartments id, Model model) {
+	public String showThisDept(@PathVariable("id") MenuDepartments id, User user, Orders order, Model model) {
+		model.addAttribute("user", user);
+		model.addAttribute("order", order);
 		model.addAttribute("menuItems", menuRepo.findByItemDepartment(id));
 		return "viewDept";
 	}
@@ -119,7 +125,7 @@ public class WebController {
 	}
 	
 	
-	@GetMapping("/addOrderItem/{id}")
+/*	@GetMapping("/addOrderItem/{id}")
 	public String addOrderItem(@PathVariable("id") int id, Model model) {
 		OrderItems oi = new OrderItems(id);
 		model.addAttribute("addOrderItem", oi);
@@ -127,6 +133,24 @@ public class WebController {
 		oi.setOrderId(1); //Placeholder until we have login functionality
 						  //Must have an order in database to work
 		oiRepo.save(oi);
+		return "customerportal";
+	} */
+	
+	@GetMapping("/addOrderItem/{id}")
+	public String viewItem(@PathVariable("id") long id, User user, Orders order, Model model) {
+		model.addAttribute("user", user);
+		model.addAttribute("order", order);
+	//	long orderId = 1;
+	//	Orders or = oRepo.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + orderId));
+	//	model.addAttribute("order", or);
+		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
+		model.addAttribute("item", mi);
+		return "viewItem";
+	}
+	
+	@PostMapping("/addItemToCart")
+	public String addItemToCart(@ModelAttribute OrderItems ca, Model model) {
+		oiRepo.save(ca);
 		return "customerportal";
 	}
 	

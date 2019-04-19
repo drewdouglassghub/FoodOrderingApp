@@ -5,8 +5,7 @@
 <title>Department Menu</title>
 </head>
 <body>
-		
-		<div class="container">
+		<div class="container">		
 <table>
 <thead>
     <tr>
@@ -16,10 +15,10 @@
     </tr>
 </thead>
 <tr th:each="currentMenuItem : ${menuItems}" >
-<td th:text="${currentMenuItem.getId()}" />
-<td th:text="${currentMenuItem.getItemName()}" />
+<td th:text="${currentMenuItem.getId()}" th:name="prodId "/>
+<td th:text="${currentMenuItem.getItemName()}" th:name="productName" />
 <td th:text="${currentMenuItem.getItemDescription()}" />
-  <td><a th:href="@{/addOrderItem/{id}(id=${currentMenuItem.getId()})}">Add to cart</a></td>
+  <td><a th:href="@{/addOrderItem/{id}(id=${currentMenuItem.getId()})}">View Item</a></td>
 </tr>
 </table>
 <a href="../">Home</a><br />

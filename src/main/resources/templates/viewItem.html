@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form name='q' th:object=${newCartItem} th:action="@{/addItemToCart}" method="post">
+<input type="hidden" th:value="${order.getId()}" name="orderId">
+<input type="hidden" th:value="${item.getId()}" name="itemId">
+Item Name:<p><span th:text="${item.itemName}"></span></p> <input type="hidden" th:value="${item.itemName}" name="productName" />
+Item Description: <p><span th:text="${item.itemDescription}"></span></p>
+Item Price: <p><span th:text="${item.itemPrice}"></span></p>
+Quantity: <input type=text name="quantity">
+<input type="submit" name="submit" value="Submit">
+</form>
+
+</body>
+</html>
