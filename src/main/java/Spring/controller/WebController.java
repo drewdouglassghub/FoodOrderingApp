@@ -202,19 +202,19 @@ public class WebController {
 	}
 
 /***************************Cart Related Edits*********************************************/
-	@GetMapping("/viewCart/{id}")
-	public String viewCart(@PathVariable("id") User id, User user, Model model) {
+	@GetMapping("/viewCart")
+	public String viewCart(Cart id, User user, Model model) {
 		//Cart ca = cartRepo.findByUserId(id);
 		model.addAttribute("user", user);
-		model.addAttribute("cart", cartRepo.findByUserId(id));
-		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
-			return "viewCart";
+		model.addAttribute("cart", cartRepo.findByUserId(user));
+		
+		if(user.getUserAuth().equals("CUSTOMER") || user.getUserAuth().equals("ADMIN")) {
+			return "/viewCart";
 		}else {
-			model.addAttribute("message", "Please sign in to view your cart.");
-			return "/login";
-		}		
+			model.addAttribute("message", "User not authorized");
+			return "login";
+		}	
 	}
-	
 
 	
 	
@@ -239,6 +239,10 @@ public class WebController {
 				user.setPhoneNumber(u.getPhoneNumber());
 				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
+				Cart tempCart = new Cart();
+				tempCart.setUserId(user);
+				cartRepo.save(tempCart);		
+				user.setCart(u.getCart());
 				return "viewAdmin";
 
 			} else if (u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")) {
@@ -250,12 +254,15 @@ public class WebController {
 				user.setPhoneNumber(u.getPhoneNumber().toString());
 				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
+				Cart tempCart = new Cart();
+				tempCart.setUserId(user);
+				cartRepo.save(tempCart);				
 				return "viewCustomer";
 			} else {
 			return "loginError";
 			}
 		}catch (Exception e) {
-			return "/loginError";
+			return "loginError";
 		}
 	}
 	

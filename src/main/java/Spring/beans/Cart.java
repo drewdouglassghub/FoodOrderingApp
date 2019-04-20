@@ -1,12 +1,16 @@
 package Spring.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="customer_cart")
@@ -23,16 +27,15 @@ public class Cart {
 	private String productName;
 	@Column(name="prod_qty")
 	private int productQty;
-	@ManyToOne(fetch=FetchType.LAZY, optional = false)
-	@JoinColumn(name="USER_ID")
+	
+	@OneToOne(fetch = FetchType.LAZY)	 
+	@JoinColumn(name = "userId")
 	private User userId;
 	
 	public Cart() {
 		super();
 	}
 
-	
-	
 
 	public Cart(long cartId, long orderId, long prodId, String productName, int productQty, User userId) {
 		super();
@@ -43,9 +46,6 @@ public class Cart {
 		this.productQty = productQty;
 		this.userId = userId;
 	}
-
-
-
 
 	public long getCartId() {
 		return cartId;
@@ -91,14 +91,9 @@ public class Cart {
 		this.prodId = prodId;
 	}
 
-
-
-
 	public User getUserId() {
 		return userId;
 	}
-
-
 
 
 	public void setUserId(User userId) {
@@ -106,9 +101,5 @@ public class Cart {
 	}
 
 
-	
-	
-	
-	
 	
 }
