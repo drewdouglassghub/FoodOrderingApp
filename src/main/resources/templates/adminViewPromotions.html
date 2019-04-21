@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Promotions</title>
+</head>
+<body>
+	<table>
+		<tr th:each="promotion: ${promotions}">
+			<td><p><strong>Promotion ID: </strong></p></td>
+			<td th:text="${promotion.getId()}" />
+			<td><p><strong>Promotion Name: </strong></p></td>
+			<td th:text="${promotion.getName()}" />
+			<td><p><strong>Promotion Type: </strong></p></td>
+			<td th:text="${promotion.getType()}" />
+			<td><p><strong>Promotion Amount: </strong></p></td>
+			<td th:text="${promotion.getAmount()}" />
+			<td><p><strong>Active: </strong></p></td>
+			<td th:text="${promotion.getActive()}" />
+			<td><a th:href="@{/adminPromoEdit/{id}(id=${promotion.id})}">Edit</a></td>
+			<td><a th:href="@{/adminPromoDelete/{id}(id=${promotion.id})}">Delete</a></td>
+		</tr>
+	</table>
+<a href="../adminportal">Return to Menu</a>
+</body>
+</html>

@@ -23,7 +23,7 @@ import Spring.Repository.MenuDepartmentsRepository;
 import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
-
+import Spring.Repository.PromotionRepository;
 import Spring.beans.Cart;
 
 import Spring.beans.MenuDepartments;
@@ -31,6 +31,7 @@ import Spring.beans.MenuDepartments;
 import Spring.beans.MenuItems;
 import Spring.beans.OrderItems;
 import Spring.beans.Orders;
+import Spring.beans.Promotion;
 import Spring.beans.User;
 
 @Controller
@@ -61,6 +62,9 @@ public class WebController {
 	
 	@Autowired
 	CartRepository cartRepo;
+	
+	@Autowired
+	PromotionRepository promoRepo;
 	
 //****************************************************************************************************************//
 	
@@ -344,6 +348,54 @@ public class WebController {
 	public String getDepartmentItems(Model model) {
 		model.addAttribute("departments", deptRepo.findAll());
 		return "adminViewDepartments";
+	}
+	
+	@GetMapping("/adminAddPromotion")
+	public String addNewPromotion(Model model) {
+		Promotion promo = new Promotion();
+		model.addAttribute("newPromotionItem", promo);
+		return "adminAddPromotion";
+	}
+	
+	@PostMapping("/adminAddPromotion")
+	public String addNewPromotionItem(@ModelAttribute Promotion promo, Model model) {
+		promoRepo.save(promo);
+		return "adminportal";
+	}
+	
+	@GetMapping("viewPromotions")
+	public String viewDepartmentItems(Model model) {
+		model.addAttribute("promotions", promoRepo.findAll());
+		return "adminViewPromotions";
+	}
+	
+	@GetMapping("adminPromoEdit/{id}")
+	public String showPromoUpdateForm(@PathVariable("id") long id, Model model) {
+		Promotion promo = promoRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Promotion Id: " + id));
+		
+		model.addAttribute("promotion", promo);
+		return "adminPromoEdit";
+	}
+	
+	@PostMapping("adminPromoEdit/{id}")
+	public String updatePromoItem(@PathVariable("id") long id, @Valid Promotion promo, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			promo.setId(id);
+			return "adminPromoEdit";
+		}
+		
+		promoRepo.save(promo);
+		model.addAttribute("promotions", promoRepo.findAll());
+		return "adminViewPromotions";
+	}
+	
+	@GetMapping("adminPromoDelete/{id}")
+	public String deletePromoItem(@PathVariable("id") long id, Model model) {
+		Promotion promo = promoRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Promotion Id: " + id));
+		
+		promoRepo.delete(promo);
+		model.addAttribute("promotions", promoRepo.findAll());
+		return "adminViewPromotions";
 	}
 	
 }
