@@ -19,7 +19,8 @@
 				<td th:text="${currentOrderItems.getItemName()}" />
 				<td th:text="${currentOrderItems.getQuantity()}" />
 				<td th:text="${currentOrderItems.getRequest()}" />
-				<td><a th:href="@{/updateOrderItem/{id}(id=${currentOrderItems.getId()})}">Update Cart Item</a></td>
+				<td><a th:href="@{/updateOrderItem/{id}(id=${currentOrderItems.getId()})}">Change quantity/request</a></td>
+				<td><a th:href="@{/deleteOrderItem/{id}(id=${currentOrderItems.getId()})}">Remove from cart</a></td>
 			</tr>
 		</table>
 		<a href="../">Home</a><br />

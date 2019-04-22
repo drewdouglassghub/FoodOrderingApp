@@ -264,15 +264,24 @@ public class WebController {
 	
 	@PostMapping("/updateOrderItem/{id}")
 	public String updateOrderItem(@PathVariable("id") long id, @Valid OrderItems oi, Model model) {
-		//if(result.hasErrors()) {
-			//return "customerportal";
-		//}
+
 		System.out.println(oi.toString());
 		oiRepo.save(oi);
 		
 		User user = uRepo.findByUserId(oi.getUserId());
 		model.addAttribute("user", user);
 		Orders o = oRepo.findByCustomerId(user.getUserId()); //was having difficulty getting this from oi so it's getting it from user.
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		return "viewCart";
+	}
+	
+	@GetMapping("deleteOrderItem/{id}")
+	public String deleteOrderItem(@PathVariable("id") long id, User user, Model model) {
+		OrderItems oi = oiRepo.findById(id);
+		
+		oiRepo.delete(oi);
+		model.addAttribute("user", user);
+		Orders o = oRepo.findByCustomerId(user.getUserId());
 		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
 		return "viewCart";
 	}
