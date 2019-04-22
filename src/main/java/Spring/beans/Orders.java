@@ -10,9 +10,9 @@ import javax.persistence.Id;
 public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long orderid;
+	private long orderId;
 	@Column(name = "USER_ID")
-	private int customerId;
+	private long customerId;
 	
 	
 	public Orders() {
@@ -20,20 +20,20 @@ public class Orders {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Orders(long id, int customerId) {
+	public Orders(long id, long customerId) {
 		super();
-		this.orderid = id;
+		this.orderId = id;
 		this.customerId = customerId;
 	}
 	
 	
 	public long getId() {
-		return orderid;
+		return orderId;
 	}
 	public void setId(long id) {
-		this.orderid = id;
+		this.orderId = id;
 	}
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 	public void setCustomerId(int customerId) {

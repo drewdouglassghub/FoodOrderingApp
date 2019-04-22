@@ -232,9 +232,16 @@ public class WebController {
 /***************************Cart Related Edits*********************************************/
 	@GetMapping("/viewCart/{id}")
 	public String viewCart(@PathVariable("id") User id, User user, Model model) {
-		//Cart ca = cartRepo.findByUserId(id);
 		model.addAttribute("user", user);
-		model.addAttribute("cart", cartRepo.findByUserId(id));
+		Orders o = oRepo.findByCustomerId(id.getUserId());
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		
+
+		/* Old
+		//Cart ca = cartRepo.findByUserId(id);
+		System.out.println(id.toString()); //debug
+		model.addAttribute("user", user);
+		model.addAttribute("cart", cartRepo.findByUserId(id)); */
 		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
 			return "viewCart";
 		}else {

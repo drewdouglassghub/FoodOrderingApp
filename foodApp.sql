@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: foodApp
+-- Host: localhost    Database: foodapp
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -134,14 +134,16 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `order_items` (
-  `ORDER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ORDER_ID` int(11) NOT NULL,
   `ITEM_ID` int(11) NOT NULL,
   `QUANTITY` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `ORDER_IDFK` (`ORDER_ID`),
   KEY `ITEM_ID_FK` (`ITEM_ID`),
   CONSTRAINT `ITEM_ID_FK` FOREIGN KEY (`ITEM_ID`) REFERENCES `menu_items` (`item_id`),
   CONSTRAINT `order_items_orders_fk` FOREIGN KEY (`ORDER_ID`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +152,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (1,2,1),(1,1,1),(1,1,1),(1,3,1),(1,1,2),(1,1,3);
+INSERT INTO `order_items` VALUES (1,2,1,1),(1,1,1,2),(1,1,1,3),(1,3,1,4),(1,1,2,5),(1,1,3,6),(1,1,1,7),(1,1,2,8);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-21 11:51:32
+-- Dump completed on 2019-04-22  1:22:02
