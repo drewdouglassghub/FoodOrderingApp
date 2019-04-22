@@ -10,6 +10,7 @@ import Spring.beans.Orders;
 public interface OrdersRepository extends JpaRepository<Orders, Long>{
 
 	Orders findByCustomerId(long customerId);
+	Orders findByOrderId(long id);
 
 
 	

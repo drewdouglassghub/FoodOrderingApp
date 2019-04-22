@@ -99,9 +99,12 @@ public class MenuItems {
 	public void setItemDepartment(MenuDepartments itemDepartment) {
 		this.itemDepartment = itemDepartment;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "MenuItem [id = " + itemId + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment.getDepartmentName() + "]";
+		return "MenuItems [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemPath="
+				+ itemPath + ", itemDescription=" + itemDescription + ", itemDepartment=" + itemDepartment + "]";
 	}
+	
+	
 }

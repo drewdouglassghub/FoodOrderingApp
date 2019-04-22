@@ -178,6 +178,8 @@ public class WebController {
 		model.addAttribute("orders", oRepo.findAll());
 		return "customerportal";
 	}
+	
+	
 /*************************************************************************/	
 
 /************************Admin Related Edits******************************/	
@@ -229,25 +231,50 @@ public class WebController {
 		return "adminViewMenu";
 	}
 
-/***************************Cart Related Edits*********************************************/
+/***************************Cart/Order Items Related Edits*********************************************/
 	@GetMapping("/viewCart/{id}")
-	public String viewCart(@PathVariable("id") User id, User user, Model model) {
+	public String viewCart(@PathVariable("id") User user, Model model) {
 		model.addAttribute("user", user);
-		Orders o = oRepo.findByCustomerId(id.getUserId());
+		Orders o = oRepo.findByCustomerId(user.getUserId());
 		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
 		
 
-		/* Old
-		//Cart ca = cartRepo.findByUserId(id);
-		System.out.println(id.toString()); //debug
-		model.addAttribute("user", user);
-		model.addAttribute("cart", cartRepo.findByUserId(id)); */
 		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
 			return "viewCart";
 		}else {
 			model.addAttribute("message", "Please sign in to view your cart.");
 			return "/login";
 		}		
+	}
+	
+	@GetMapping("/updateOrderItem/{id}")
+	public String updateOrderItem(@PathVariable("id") long id, User user, Model model) {
+		
+		OrderItems oi = oiRepo.findById(id);
+		System.out.println(oi.getOrderIdNum());
+		oi.setOrderId(oRepo.findByOrderId(oi.getOrderIdNum()));
+		Orders o = oi.getOrderId();
+		model.addAttribute("orderitems", oi);
+		model.addAttribute("user", user);
+		model.addAttribute("orders", o);
+		System.out.println(oi.toString());
+		System.out.println(oi.getOrderId());
+		return "updateOrderItem";
+	}
+	
+	@PostMapping("/updateOrderItem/{id}")
+	public String updateOrderItem(@PathVariable("id") long id, @Valid OrderItems oi, Model model) {
+		//if(result.hasErrors()) {
+			//return "customerportal";
+		//}
+		System.out.println(oi.toString());
+		oiRepo.save(oi);
+		
+		User user = uRepo.findByUserId(oi.getUserId());
+		model.addAttribute("user", user);
+		Orders o = oRepo.findByCustomerId(user.getUserId()); //was having difficulty getting this from oi so it's getting it from user.
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		return "viewCart";
 	}
 	
 

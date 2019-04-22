@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Update Contact</title>
+</head>
+<body>
+<form action="#" th:action="@{/updateOrderItem/{id}(id=${orderitems.id})}" th:object="${orderitems}" method="post">   
+    
+	
+	Item: <span th:text="${orderitems.getItemName()}" ></span>
+	<br/>
+
+	
+	<label for="quantity">Quantity:</label>
+	<input type="number" th:field="*{quantity}" id="quantity">
+	<span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span><br/>
+    
+    <label for="request">Special Request:</label>
+	<input type="text" th:field="*{request}" id="request">
+	<span th:if="${#fields.hasErrors('request')}" th:errors="*{request}"></span><br/>
+	
+	<input type="hidden" th:field="*{orderId}" id="orderId">
+	<input type="hidden" th:field="*{itemId}" id="itemId">
+	<input type="hidden" th:field="*{id}" id="id">
+	
+    <input type="submit" value="Update Order">   
+</form>
+</body>
+</html>

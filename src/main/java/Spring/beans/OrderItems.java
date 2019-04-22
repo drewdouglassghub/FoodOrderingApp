@@ -12,10 +12,10 @@ import javax.persistence.ManyToOne;
 @Entity(name = "order_items")
 public class OrderItems {
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@ManyToOne(fetch=FetchType.EAGER, optional = false)
 	@JoinColumn(name="ORDER_ID")
 	private Orders orderId;
-	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@ManyToOne(fetch=FetchType.EAGER, optional = false)
 	@JoinColumn(name="ITEM_ID")
 	private MenuItems itemId;
 	@Column(name = "QUANTITY")
@@ -23,6 +23,8 @@ public class OrderItems {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@Column(name = "REQUEST")
+	private String request;
 
 	public OrderItems() {
 		super();
@@ -36,6 +38,15 @@ public class OrderItems {
 	}
 	
 
+	//No request constructor
+	public OrderItems(Orders orderId, MenuItems itemId, int quantity, String request) {
+		super();
+		this.orderId = orderId;
+		this.itemId = itemId;
+		this.quantity = quantity;
+		this.request = request;
+	}
+
 	//All fields constructor
 	public OrderItems(Orders orderId, MenuItems itemId, int quantity) {
 		super();
@@ -46,6 +57,14 @@ public class OrderItems {
 
 	public String getItemName() {
 		return itemId.getItemName();
+	}
+	
+	public Long getOrderIdNum() {
+		return orderId.getId();
+	}
+	
+	public Long getUserId() {
+		return orderId.getCustomerId();
 	}
 	
 	public long getId() {
@@ -80,13 +99,19 @@ public class OrderItems {
 		this.quantity = quantity;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderItems [orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + ", id=" + id + "]";
+	public String getRequest() {
+		return request;
 	}
 
-	
-	
-	
+	public void setRequest(String request) {
+		this.request = request;
+	}
 
+	@Override
+	public String toString() {
+		return "OrderItems [orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + ", id=" + id
+				+ ", request=" + request + "]";
+	}
+	
+	
 }

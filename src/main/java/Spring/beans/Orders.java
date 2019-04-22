@@ -39,6 +39,13 @@ public class Orders {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
+
+	@Override
+	public String toString() {
+		return "Orders [orderId=" + orderId + ", customerId=" + customerId + "]";
+	}
+	
+	
 	
 	
 }
