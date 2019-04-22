@@ -27,6 +27,13 @@ public class Orders {
 	}
 	
 	
+	
+
+	public Orders(long customerId) {
+		super();
+		this.customerId = customerId;
+	}
+
 	public long getOrderId() {
 		return orderId;
 	}
