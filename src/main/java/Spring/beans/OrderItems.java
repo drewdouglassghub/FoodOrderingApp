@@ -2,21 +2,29 @@ package Spring.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "order_items")
 public class OrderItems {
+	
+	@ManyToOne(fetch=FetchType.EAGER, optional = false)
+	@JoinColumn(name="ORDER_ID")
+	private Orders orderId;
+	@ManyToOne(fetch=FetchType.EAGER, optional = false)
+	@JoinColumn(name="ITEM_ID")
+	private MenuItems itemId;
+	@Column(name = "QUANTITY")
+	private int quantity;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "ORDER_ID")
-	private int orderId;
-	@Column(name = "ITEM_ID")
-	private int itemId;
-	@Column(name = "QUANTITY")
-	private int quantity;
+	@Column(name = "REQUEST")
+	private String request;
 
 	public OrderItems() {
 		super();
@@ -24,27 +32,41 @@ public class OrderItems {
 	}
 
 	//Only item id constructor
-	public OrderItems(int itemId) {
+	public OrderItems(MenuItems itemId) {
 		super();
 		this.itemId = itemId;
 	}
 	
-	//No ID constructor
-	public OrderItems(int orderId, int itemId, int quantity) {
+
+	//No request constructor
+	public OrderItems(Orders orderId, MenuItems itemId, int quantity, String request) {
 		super();
 		this.orderId = orderId;
 		this.itemId = itemId;
 		this.quantity = quantity;
+		this.request = request;
 	}
+
 	//All fields constructor
-	public OrderItems(long id, int orderId, int itemId, int quantity) {
+	public OrderItems(Orders orderId, MenuItems itemId, int quantity) {
 		super();
-		this.id = id;
 		this.orderId = orderId;
 		this.itemId = itemId;
 		this.quantity = quantity;
 	}
 
+	public String getItemName() {
+		return itemId.getItemName();
+	}
+	
+	public Long getOrderIdNum() {
+		return orderId.getOrderId();
+	}
+	
+	public Long getUserId() {
+		return orderId.getCustomerId();
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -53,19 +75,19 @@ public class OrderItems {
 		this.id = id;
 	}
 
-	public int getOrderId() {
+	public Orders getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setOrderId(Orders orderId) {
 		this.orderId = orderId;
 	}
 
-	public int getItemId() {
+	public MenuItems getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(MenuItems itemId) {
 		this.itemId = itemId;
 	}
 
@@ -77,11 +99,19 @@ public class OrderItems {
 		this.quantity = quantity;
 	}
 
+	public String getRequest() {
+		return request;
+	}
+
+	public void setRequest(String request) {
+		this.request = request;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderItems [id=" + id + ", orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + "]";
+		return "OrderItems [orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + ", id=" + id
+				+ ", request=" + request + "]";
 	}
 	
 	
-
 }

@@ -2,25 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>View Cart</title>
 </head>
 <body>
-		
-		<div class="container">
-<table>
-<thead>
-    <tr>
-        <th>Item Name: </th>
-        <th>Quantity: </th>
-    </tr>
-</thead>
-<tr th:each="currentCart : ${cart}" >
-<td th:text="${currentCart.getProductName()}" />
-<td th:text="${currentCart.getProductQty()}" />
-</tr>
-</table>
-<a href="../">Home</a><br />
-</div>
-			
+	
+		<table>
+			<thead>
+				<tr>
+					<th>Item Name: </th>
+					<th>Quantity: </th>
+					<th>Special Request: </th>
+				</tr>
+			</thead>
+
+			<tr th:each="currentOrderItems : ${orderitems}">
+				<td th:text="${currentOrderItems.getItemName()}" />
+				<td th:text="${currentOrderItems.getQuantity()}" />
+				<td th:text="${currentOrderItems.getRequest()}" />
+				<td><a th:href="@{/updateOrderItem/{id}(id=${currentOrderItems.getId()})}">Change quantity/request</a></td>
+				<td><a th:href="@{/deleteOrderItem/{id}(id=${currentOrderItems.getId()})}">Remove from cart</a></td>
+			</tr>
+		</table>
+		<a href="/viewMenu">View the menu to add more items</a><br />
+		<a href="/customerportal">Return to portal</a> <br />
+		<a href="../">Home</a><br />
+	
+
 </body>
 </html>

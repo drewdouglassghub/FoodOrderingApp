@@ -9,4 +9,5 @@ import Spring.beans.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	
 	User findByUserName(String username);
+	User findByUserId(long id);
 }

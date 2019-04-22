@@ -1,5 +1,8 @@
 package Spring.controller;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,7 +27,6 @@ import Spring.Repository.MenuItemsRepository;
 import Spring.Repository.OrderItemsRepository;
 import Spring.Repository.OrdersRepository;
 import Spring.Repository.PromotionRepository;
-import Spring.beans.Cart;
 
 import Spring.beans.MenuDepartments;
 
@@ -96,6 +98,25 @@ public class WebController {
 			return "/login";
 		}
 	}
+	
+	@GetMapping("/createUser")
+	public String createUser(Model model) {
+		User u = new User();
+		model.addAttribute("user", u);
+		return "/createUser";
+	}
+	@PostMapping("/createUser")
+		public String createUser(User user, Model model) {
+			user.setUserAuth("CUSTOMER");
+			Date d = new Date(Calendar.getInstance().getTime().getTime());
+			user.setVisitDate(d);
+			uRepo.save(user);
+			
+			Orders o = new Orders(user.getUserId());
+			oRepo.save(o);
+			model.addAttribute(user);
+			return "/login";
+		}
 /********************************Menu Related Edits**********************/
 	
 	@GetMapping("/viewMenu")
@@ -129,31 +150,19 @@ public class WebController {
 	}
 	
 	
-/*	@GetMapping("/addOrderItem/{id}")
-	public String addOrderItem(@PathVariable("id") int id, Model model) {
-		OrderItems oi = new OrderItems(id);
-		model.addAttribute("addOrderItem", oi);
-		oi.setQuantity(1);
-		oi.setOrderId(1); //Placeholder until we have login functionality
-						  //Must have an order in database to work
-		oiRepo.save(oi);
-		return "customerportal";
-	} */
-	
 	@GetMapping("/addOrderItem/{id}")
 	public String viewItem(@PathVariable("id") long id, User user, Orders order, Model model) {
 		model.addAttribute("user", user);
 		model.addAttribute("order", order);
-	//	long orderId = 1;
-	//	Orders or = oRepo.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + orderId));
-	//	model.addAttribute("order", or);
 		MenuItems mi = menuRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Menu Item Id: " + id));
 		model.addAttribute("item", mi);
 		return "viewItem";
 	}
 	
 	@PostMapping("/addItemToCart")
-	public String addItemToCart(@ModelAttribute OrderItems ca, Model model) {
+	public String addItemToCart(@ModelAttribute OrderItems ca, User user, Model model) {
+		Orders order = oRepo.findByCustomerId(user.getUserId());
+		ca.setOrderId(order);
 		oiRepo.save(ca);
 		return "customerportal";
 	}
@@ -170,7 +179,7 @@ public class WebController {
 	@PostMapping("/updateOrder/{id}")
 	public String updateOrders(@PathVariable("id") long id, @Valid Orders o, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			o.setId(id);;
+			o.setOrderId(id);;
 			return "updateOrder";
 		}
 		
@@ -178,6 +187,8 @@ public class WebController {
 		model.addAttribute("orders", oRepo.findAll());
 		return "customerportal";
 	}
+	
+	
 /*************************************************************************/	
 
 /************************Admin Related Edits******************************/	
@@ -229,18 +240,60 @@ public class WebController {
 		return "adminViewMenu";
 	}
 
-/***************************Cart Related Edits*********************************************/
+/***************************Cart/Order Items Related Edits*********************************************/
 	@GetMapping("/viewCart/{id}")
-	public String viewCart(@PathVariable("id") User id, User user, Model model) {
-		//Cart ca = cartRepo.findByUserId(id);
+	public String viewCart(@PathVariable("id") User user, Model model) {
 		model.addAttribute("user", user);
-		model.addAttribute("cart", cartRepo.findByUserId(id));
+		/* Error handling for users who haven't made a cart yet.
+		if (oRepo.findByCustomerId(user.getUserId())) {
+			return "/customerportal";
+		}
+		*/
+		Orders o = oRepo.findByCustomerId(user.getUserId());
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		
+
 		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
 			return "viewCart";
 		}else {
 			model.addAttribute("message", "Please sign in to view your cart.");
 			return "/login";
 		}		
+	}
+	
+	@GetMapping("/updateOrderItem/{id}")
+	public String updateOrderItem(@PathVariable("id") long id, User user, Model model) {
+		
+		OrderItems oi = oiRepo.findById(id);
+		oi.setOrderId(oRepo.findByOrderId(oi.getOrderIdNum()));
+		Orders o = oi.getOrderId();
+		model.addAttribute("orderitems", oi);
+		model.addAttribute("user", user);
+		model.addAttribute("orders", o);
+		return "updateOrderItem";
+	}
+	
+	@PostMapping("/updateOrderItem/{id}")
+	public String updateOrderItem(@PathVariable("id") long id, @Valid OrderItems oi, Model model) {
+
+		oiRepo.save(oi);
+		
+		User user = uRepo.findByUserId(oi.getUserId());
+		model.addAttribute("user", user);
+		Orders o = oRepo.findByCustomerId(user.getUserId()); //was having difficulty getting this from oi so it's getting it from user.
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		return "viewCart";
+	}
+	
+	@GetMapping("deleteOrderItem/{id}")
+	public String deleteOrderItem(@PathVariable("id") long id, User user, Model model) {
+		OrderItems oi = oiRepo.findById(id);
+		
+		oiRepo.delete(oi);
+		model.addAttribute("user", user);
+		Orders o = oRepo.findByCustomerId(user.getUserId());
+		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		return "viewCart";
 	}
 	
 
@@ -256,10 +309,10 @@ public class WebController {
 		try {
 
 			User u = uRepo.findByUserName(username);
-			model.addAttribute("tempUser", u);
+			//model.addAttribute("tempUser", u);
 
 			if (u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN")) {
-				model.addAttribute("user", user);
+				
 				user.setFirstName(u.getFirstName());
 				user.setLastName(u.getLastName());
 				user.setVisitDate(u.getVisitDate());
@@ -267,10 +320,11 @@ public class WebController {
 				user.setPhoneNumber(u.getPhoneNumber());
 				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
+				model.addAttribute("user", u);
 				return "viewAdmin";
 
 			} else if (u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")) {
-				model.addAttribute("user", user);
+				
 				user.setFirstName(u.getFirstName());
 				user.setLastName(u.getLastName());
 				user.setVisitDate(u.getVisitDate());
@@ -278,6 +332,7 @@ public class WebController {
 				user.setPhoneNumber(u.getPhoneNumber().toString());
 				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
+				model.addAttribute("user", u);
 				return "viewCustomer";
 			} else {
 			return "loginError";

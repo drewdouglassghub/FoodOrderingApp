@@ -51,14 +51,22 @@ public class MenuItems {
 		this.itemDepartment = itemDepartment;
 	}
 
-	public long getId() {
+	public long getItemId() {
 		return itemId;
+	}
+	
+	public long getId() { //Needed to be getItemId but leaving getId in since it's on random webpages. Same with setId
+		return itemId;
+	}
+
+	public void setItemId(long id) {
+		this.itemId = id;
 	}
 
 	public void setId(long id) {
 		this.itemId = id;
 	}
-
+	
 	public String getItemName() {
 		System.out.println("Item: " + itemName);
 		return itemName;
@@ -99,9 +107,12 @@ public class MenuItems {
 	public void setItemDepartment(MenuDepartments itemDepartment) {
 		this.itemDepartment = itemDepartment;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "MenuItem [id = " + itemId + ", itemName = " + itemName + ", itemPrice = $" + itemPrice + ", itemPath = " + itemPath + ", itemDescription = " + itemDescription + ", + itemDepartment = " + itemDepartment.getDepartmentName() + "]";
+		return "MenuItems [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemPath="
+				+ itemPath + ", itemDescription=" + itemDescription + ", itemDepartment=" + itemDepartment + "]";
 	}
+	
+	
 }
