@@ -44,7 +44,9 @@ public class OrderItems {
 		this.quantity = quantity;
 	}
 
-
+	public String getItemName() {
+		return itemId.getItemName();
+	}
 	
 	public long getId() {
 		return id;

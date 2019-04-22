@@ -14,11 +14,11 @@
         <th>Quantity: </th>
     </tr>
 </thead>
-<!-- 
+
 <tr th:each="currentOrderItems : ${orderitems}" >
-<td th:text="${currentCart.getProductName()}" />
-<td th:text="${currentCart.getProductQty()}" />
-</tr> -->
+<td th:text="${currentOrderItems.getItemName()}" />
+<td th:text="${currentOrderItems.getQuantity()}" />
+</tr>
 </table>
 <a href="../">Home</a><br />
 </div>
