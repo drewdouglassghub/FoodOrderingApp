@@ -60,7 +60,7 @@ public class OrderItems {
 	}
 	
 	public Long getOrderIdNum() {
-		return orderId.getId();
+		return orderId.getOrderId();
 	}
 	
 	public Long getUserId() {

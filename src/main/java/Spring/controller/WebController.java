@@ -170,7 +170,7 @@ public class WebController {
 	@PostMapping("/updateOrder/{id}")
 	public String updateOrders(@PathVariable("id") long id, @Valid Orders o, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			o.setId(id);;
+			o.setOrderId(id);;
 			return "updateOrder";
 		}
 		

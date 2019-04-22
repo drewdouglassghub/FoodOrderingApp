@@ -27,9 +27,18 @@ public class Orders {
 	}
 	
 	
-	public long getId() {
+	public long getOrderId() {
 		return orderId;
 	}
+	
+	public long getId() {//Needed to be getOrderId but leaving getId in since it's on random webpages. Same with setId
+		return orderId;
+	}
+	
+	public void setOrderId(long id) {
+		this.orderId = id;
+	}
+	
 	public void setId(long id) {
 		this.orderId = id;
 	}

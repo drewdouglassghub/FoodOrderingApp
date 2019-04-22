@@ -51,14 +51,22 @@ public class MenuItems {
 		this.itemDepartment = itemDepartment;
 	}
 
-	public long getId() {
+	public long getItemId() {
 		return itemId;
+	}
+	
+	public long getId() { //Needed to be getItemId but leaving getId in since it's on random webpages. Same with setId
+		return itemId;
+	}
+
+	public void setItemId(long id) {
+		this.itemId = id;
 	}
 
 	public void setId(long id) {
 		this.itemId = id;
 	}
-
+	
 	public String getItemName() {
 		System.out.println("Item: " + itemName);
 		return itemName;
