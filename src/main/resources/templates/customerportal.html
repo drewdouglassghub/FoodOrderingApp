@@ -4,14 +4,16 @@
 <meta charset="ISO-8859-1">
 <title>Customer View</title>
 </head>
-<!-- Formatting needed - this is a filler page -->
 <body>
 
 
-<h1>Welcome <span th:text="${user.getFirstName()}"> </span>! What would you like to do?</h1>
-<!-- Not sure if all of these will be links or form buttons so I went with links for simplicity -->
-<a href="../viewMenu">Link to menus here</a><br>
-<a href="../viewCart/2">Link to order/cart here</a><br> <!-- Links to customer 2 until we get logins completed -->
-<a href="/logout">Logout</a>
+	<h1>Welcome <span th:text="${user.getFirstName()}"> </span>! What would you like to do?</h1>
+	<!-- Not sure if all of these will be links or form buttons so I went with links for simplicity -->
+
+
+	<a href="../viewMenu">View menu by departments</a><br>
+	<a th:href="@{/viewCart/{id}(id=${user.getUserId()})}">View your cart</a><br>
+	<a href="/logout">Logout</a>
+
 </body>
 </html>

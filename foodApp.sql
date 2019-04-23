@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: foodApp
+-- Host: localhost    Database: foodapp
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -40,36 +40,6 @@ CREATE TABLE `customer` (
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `customer_cart`
---
-
-DROP TABLE IF EXISTS `customer_cart`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `customer_cart` (
-  `ORDER_ID` int(11) NOT NULL,
-  `PROD_ID` int(11) NOT NULL,
-  `PROD_NAME` varchar(20) NOT NULL,
-  `PROD_QTY` int(2) NOT NULL,
-  `USER_ID` int(11) NOT NULL,
-  PRIMARY KEY (`ORDER_ID`,`PROD_ID`),
-  KEY `PROD_IDFK_idx` (`PROD_ID`),
-  CONSTRAINT `CART_IDFK` FOREIGN KEY (`ORDER_ID`) REFERENCES `orders` (`order_id`),
-  CONSTRAINT `PROD_IDFK` FOREIGN KEY (`PROD_ID`) REFERENCES `menu_items` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `customer_cart`
---
-
-LOCK TABLES `customer_cart` WRITE;
-/*!40000 ALTER TABLE `customer_cart` DISABLE KEYS */;
-INSERT INTO `customer_cart` VALUES (1,1,'Nachos',1,2);
-/*!40000 ALTER TABLE `customer_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -134,14 +104,17 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `order_items` (
-  `ORDER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ORDER_ID` int(11) NOT NULL,
   `ITEM_ID` int(11) NOT NULL,
   `QUANTITY` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `ORDER_IDFK` (`ORDER_ID`),
   KEY `ITEM_ID_FK` (`ITEM_ID`),
   CONSTRAINT `ITEM_ID_FK` FOREIGN KEY (`ITEM_ID`) REFERENCES `menu_items` (`item_id`),
   CONSTRAINT `order_items_orders_fk` FOREIGN KEY (`ORDER_ID`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +123,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (1,2,1),(1,1,1),(1,1,1),(1,3,1),(1,1,2),(1,1,3);
+INSERT INTO `order_items` VALUES (1,2,1,1,'No juice'),(1,1,1,2,NULL),(1,1,1,3,NULL),(2,1,2,16,NULL);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +140,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`ORDER_ID`),
   KEY `CUSTOMER_IDFK` (`USER_ID`),
   CONSTRAINT `orders_user_fk` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +149,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,2);
+INSERT INTO `orders` VALUES (1,2),(2,5);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +198,7 @@ CREATE TABLE `user` (
   `USER_PASSWORD` varchar(50) NOT NULL,
   `USER_AUTH` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +207,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','2019-11-11 00:00:00','drew@hotmail.com','5555555555','admin','admin','ADMIN'),(2,'customer','customer','2019-11-11 00:00:00','drew@hotmail.com','5555555555','customer','customer','CUSTOMER');
+INSERT INTO `user` VALUES (1,'admin','admin','2019-11-11 00:00:00','drew@hotmail.com','5555555555','admin','admin','ADMIN'),(2,'customer','customer','2019-11-11 00:00:00','drew@hotmail.com','5555555555','customer','customer','CUSTOMER'),(3,'Billy','Bob','2019-11-11 00:00:00','bb@gmail.com','5555555555','billy','billy','CUSTOMER'),(4,'Frank','Johnson','2019-04-22 00:00:00','FJohnson@gmail.com','5556667777','fj','fj','CUSTOMER'),(5,'Aaron','Siems','2019-04-22 00:00:00','ajsiems@dmacc.edu','5151234567','asiems','asiems','CUSTOMER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -247,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-21 11:51:32
+-- Dump completed on 2019-04-22  7:23:59
