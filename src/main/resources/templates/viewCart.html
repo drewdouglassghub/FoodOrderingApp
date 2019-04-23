@@ -23,6 +23,14 @@
 				<td><a th:href="@{/deleteOrderItem/{id}(id=${currentOrderItems.getId()})}">Remove from cart</a></td>
 			</tr>
 		</table>
+		<br/>
+		<table>
+			<tr th:each="item: ${moneyItems}">
+				<td th:text="${item}" />
+			</tr>
+		</table>
+		<p><span th:text="${totalCost}"></span></p>
+		<p>Promotion Code </p><input type="text" th:name="promo" id="promo" /><a th:href="@{/usePromoCode/{promo}(promo=${promo})}">Use Promotional Code Code</a><br/>
 		<a href="/viewMenu">View the menu to add more items</a><br />
 		<a href="/customerportal">Return to portal</a> <br />
 		<a href="../">Home</a><br />
