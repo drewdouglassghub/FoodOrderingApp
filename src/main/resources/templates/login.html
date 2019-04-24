@@ -6,6 +6,9 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
+<header>User Login</header>
+<div class="container">
 <span th:text="${message}"></span>
 
 <form action="#" th:action="@{/loginUser/{username}(username=${username})}" th:object="${user}" method='POST'>
@@ -16,7 +19,8 @@
          
  <input name="submit" type="submit" value="submit" /><br>
  
- <a href="/viewMenu">Go to Menu</a>
  </form>
+  <a href="/viewMenu">Go to Menu</a>
+ </div>
 </body>
 </html>

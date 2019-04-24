@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" th:href="@{/style.css}" type="text/css" href="style.css">
 <meta charset="UTF-8">
 <title>Department Menu</title>
 </head>
 <body>
+
+<header th:text="${deptId.getDepartmentName()}" ></header>
+
 		<div class="container">		
 <table>
 <thead>

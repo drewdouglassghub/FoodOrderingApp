@@ -5,6 +5,10 @@
 <title>Update Contact</title>
 </head>
 <body>
+
+<header>Update Order</header>
+
+<div class="container">
 <form action="#" th:action="@{/updateOrderItem/{id}(id=${orderitems.id})}" th:object="${orderitems}" method="post">   
     
 	
@@ -25,6 +29,9 @@
 	<input type="hidden" th:field="*{id}" id="id">
 	
     <input type="submit" value="Update Order">   
+    
 </form>
+<a href="/customerportal">Home</a> <br />
+</div>
 </body>
 </html>
