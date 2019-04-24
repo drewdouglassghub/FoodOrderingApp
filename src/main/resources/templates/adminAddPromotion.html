@@ -6,18 +6,28 @@
 <title>Add New Promotion</title>
 </head>
 <body>
+
+<header>Add Promotion</header>
+
+<div class="container">
+<div class="container2">
 <form name="p" th:object="${newPromotionItem}" th:action="@{/adminAddPromotion}" method="post">
 Promotion Name: <input type="text" name="name" /><br/>
+Promotion Amount: <input type="text" name="amount" /><br/>
 Promotion Type: <select name="type">
 				<option value="A">Amount</option>
 				<option value="P">Percent</option>
 				</select><br/>
-Promotion Amount: <input type="text" name="amount" /><br/>
+
 Active: <select name="active">
 		<option value="Y">Yes</option>
 		<option value="N">No</option>
 		</select><br/>
-<input name="submit" type="submit" value="Submit" />
+<input name="submit" type="submit" value="Submit" /><br>
+
 </form>
+<a href="/adminportal">Admin Home</a><br />
+</div>
+</div>
 </body>
 </html>

@@ -7,7 +7,11 @@
 </head>
 <body>
 
-<p th:text=${user.getUserName()}></p>
+<header>Admin Options</header>
+
+<div class="container">
+
+<h2 th:text="|Welcome, ${user.getUserName()}!  |"></h2>
 <a href="../inputDepartment">Add Department</a><br/>
 <a href="../viewDepartmentItems">View Current Departments</a><br/>
 <a href="../inputMenuItem">Add Menu Items</a><br/>
@@ -17,5 +21,6 @@
 <a href="../adminAddPromotion">Add Promotion</a><br/>
 <a href="../viewPromotions">View Promotions</a><br/>
 <a href="/logout">Logout</a>
+</div>
 </body>
 </html>

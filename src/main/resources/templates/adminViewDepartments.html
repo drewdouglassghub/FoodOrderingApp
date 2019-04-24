@@ -6,6 +6,9 @@
 <title>Admin Department View</title>
 </head>
 <body>
+
+<header>Menu Departments</header>
+<div class="container">
 	<table>
 		<tr th:each="department: ${departments}">
 			<td><p><strong>Department ID: </strong></p></td>
@@ -16,6 +19,7 @@
 			<td><a th:href="@{/adminDeptDelete/{id}(id=${department.getDepartmentName()})}">Delete</a></td>
 		</tr>
 	</table>
-<a href="../adminportal">Return to Menu</a>
+<a href="../adminportal">Admin Home</a>
+</div>
 </body>
 </html>

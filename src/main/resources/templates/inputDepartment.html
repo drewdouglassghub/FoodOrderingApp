@@ -6,9 +6,15 @@
 <title>Insert New Department</title>
 </head>
 <body>
+
+<header>Add Department</header>
+
+<div class="container">
 	<form name="p" th:object="${newDepartmentItem}" th:action="@{/inputDepartment}" method="post">
 		Department Name: <input name="departmentName" size="20">
 		<input name="submit" type="submit" value="Submit">
 	</form>
+	<a href="/adminportal">Admin Home</a><br />
+	</div>
 </body>
 </html>
