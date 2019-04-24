@@ -136,6 +136,7 @@ public class WebController {
 	public String showThisDept(@PathVariable("id") MenuDepartments id, User user, Orders order, Model model) {
 		model.addAttribute("user", user);
 		model.addAttribute("order", order);
+		model.addAttribute("deptId", id);
 		model.addAttribute("menuItems", menuRepo.findByItemDepartment(id));
 		return "viewDept";
 	}
