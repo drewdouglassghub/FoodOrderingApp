@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <meta charset="ISO-8859-1">
 <title>Register an account</title>
 </head>
 <body>
+
+<header>Create User</header>
+
+<div class="container">
 	<form name='q' th:object=${user} th:action="@{/createUser}" method="post">
 	
 		First Name: <input type="text" name="firstName" /><br/>
@@ -16,5 +21,7 @@
 		<input type="submit" name="submit" value="Register!">
 	
 	</form>
+	<a href="../adminportal">Admin Home</a>
+	</div>
 </body>
 </html>

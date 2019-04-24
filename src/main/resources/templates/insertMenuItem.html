@@ -1,9 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <meta charset="ISO-8859-1">
-<title>Insert Menu Item</title>
+<title>Create Menu Item</title>
 </head>
 <body>
+
+<header>Create Menu Item</header>
+
+<div class="container">
+<div class="container2">
 	<form name='f' th:object="${newMenuItem}" th:action="@{/inputMenuItem}"
 		method='POST'>
 
@@ -18,7 +24,11 @@
 		 	th:text="${department.getDepartmentName()}">
 		 	</option>
 		 </select>
-		 <br /> <input name="submit" type="submit" value="submit" />
+		<input name="submit" type="submit" value="submit" />
 	</form>
+	</div>
+	<a href="/adminportal">Admin Home</a><br />
+	</div>
+	
 </body>
 </html>

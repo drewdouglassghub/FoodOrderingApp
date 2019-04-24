@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Customer View</title>
 </head>
 <body>
 
+<header>Customer Portal</header>
 
+<div class="container">
 	<h1>Welcome <span th:text="${user.getFirstName()}"> </span>! What would you like to do?</h1>
 	<!-- Not sure if all of these will be links or form buttons so I went with links for simplicity -->
 
@@ -14,6 +17,6 @@
 	<a href="../viewMenu">View menu by departments</a><br>
 	<a th:href="@{/viewCart/{id}(id=${user.getUserId()})}">View your cart</a><br>
 	<a href="/logout">Logout</a>
-
+</div>
 </body>
 </html>
