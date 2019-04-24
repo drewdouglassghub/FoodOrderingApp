@@ -1,8 +1,13 @@
 package Spring.controller;
 
 import java.sql.Date;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -251,7 +256,30 @@ public class WebController {
 		}
 		*/
 		Orders o = oRepo.findByCustomerId(user.getUserId());
-		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		
+		List<OrderItems> orderitems = oiRepo.findByOrderId(o);
+		
+		model.addAttribute("orderitems", orderitems);
+		
+		List<String> itemValues = new ArrayList<>();
+		double totalValue = 0;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		for (int i = 0; i < orderitems.size(); i++) {
+			OrderItems toRead = orderitems.get(i);
+			MenuItems productId = toRead.getItemId();
+			double money = productId.getItemPrice() * toRead.getQuantity();
+			String sMoney = formatter.format(money);
+			String product = productId.getItemName();
+			String toSend = "Total Cost of " + product + ": " + sMoney + "";
+			itemValues.add(toSend);
+			totalValue += money;
+		}
+		String sTotal = formatter.format(totalValue);
+		String totalCost = "Total Cost of Items: " + sTotal + "";
+		
+		model.addAttribute("moneyItems", itemValues);
+		model.addAttribute("totalCost", totalCost);
 		
 
 		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
@@ -282,7 +310,29 @@ public class WebController {
 		User user = uRepo.findByUserId(oi.getUserId());
 		model.addAttribute("user", user);
 		Orders o = oRepo.findByCustomerId(user.getUserId()); //was having difficulty getting this from oi so it's getting it from user.
-		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		List<OrderItems> orderitems = oiRepo.findByOrderId(o);
+		
+		model.addAttribute("orderitems", orderitems);
+		
+		List<String> itemValues = new ArrayList<>();
+		double totalValue = 0;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		for (int i = 0; i < orderitems.size(); i++) {
+			OrderItems toRead = orderitems.get(i);
+			MenuItems productId = toRead.getItemId();
+			double money = productId.getItemPrice() * toRead.getQuantity();
+			String sMoney = formatter.format(money);
+			String product = productId.getItemName();
+			String toSend = "Total Cost of " + product + ": " + sMoney + "";
+			itemValues.add(toSend);
+			totalValue += money;
+		}
+		String sTotal = formatter.format(totalValue);
+		String totalCost = "Total Cost of Items: " + sTotal + ""; 
+		
+		model.addAttribute("moneyItems", itemValues);
+		model.addAttribute("totalCost", totalCost);
 		return "viewCart";
 	}
 	
@@ -293,7 +343,100 @@ public class WebController {
 		oiRepo.delete(oi);
 		model.addAttribute("user", user);
 		Orders o = oRepo.findByCustomerId(user.getUserId());
-		model.addAttribute("orderitems", oiRepo.findByOrderId(o));
+		List<OrderItems> orderitems = oiRepo.findByOrderId(o);
+		
+		model.addAttribute("orderitems", orderitems);
+		
+		List<String> itemValues = new ArrayList<>();
+		double totalValue = 0;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		for (int i = 0; i < orderitems.size(); i++) {
+			OrderItems toRead = orderitems.get(i);
+			MenuItems productId = toRead.getItemId();
+			double money = productId.getItemPrice() * toRead.getQuantity();
+			String sMoney = formatter.format(money);
+			String product = productId.getItemName();
+			String toSend = "Total Cost of " + product + ": " + sMoney + "";
+			itemValues.add(toSend);
+			totalValue += money;
+		}
+		String sTotal = formatter.format(totalValue);
+		String totalCost = "Total Cost of Items: " + sTotal + "";
+		
+		model.addAttribute("moneyItems", itemValues);
+		model.addAttribute("totalCost", totalCost);
+		return "viewCart";
+	}
+	
+	@GetMapping("/usePromoCode/{promo}")
+	public String usePromo(@PathVariable("promo") String promo, User user, Model model) {
+		model.addAttribute("user", user);
+		Orders o = oRepo.findByCustomerId(user.getUserId());
+		List<OrderItems> orderitems = oiRepo.findByOrderId(o);
+		model.addAttribute("orderitems", orderitems);
+		
+		List<String> itemValues = new ArrayList<>();
+		double totalValue = 0;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		for (int i = 0; i < orderitems.size(); i++) {
+			OrderItems toRead = orderitems.get(i);
+			MenuItems productId = toRead.getItemId();
+			double money = productId.getItemPrice() * toRead.getQuantity();
+			String sMoney = formatter.format(money);
+			String product = productId.getItemName();
+			String toSend = "Total Cost of " + product + ": " + sMoney + "";
+			itemValues.add(toSend);
+			totalValue += money;
+		}
+		String sTotal = formatter.format(totalValue);
+		String totalCost = "Total Cost of Items: " + sTotal + "";
+		
+		
+		Promotion thisPromo = promoRepo.findByName(promo);
+		
+		if (thisPromo == null) {
+			model.addAttribute("moneyItems", itemValues);
+			model.addAttribute("totalCost", totalCost);
+			return "viewCart";
+		}
+		
+		String active = thisPromo.getActive();
+		if (active.compareTo("N") == 0) {
+			model.addAttribute("moneyItems", itemValues);
+			model.addAttribute("totalCost", totalCost);
+			return "viewCart";
+		}
+		
+		String type = thisPromo.getType();
+		if (type.compareTo("P") == 0) {
+			double percentOff = thisPromo.getAmount();
+			double offPercent = 1 - percentOff;
+			for (int i = 0; i < orderitems.size(); i++) {
+				OrderItems toRead = orderitems.get(i);
+				MenuItems productId = toRead.getItemId();
+				double money = productId.getItemPrice() * toRead.getQuantity();
+				money *= offPercent;
+				String sMoney = formatter.format(money);
+				String product = productId.getItemName();
+				String toSend = "Total Cost of " + product + ": " + sMoney + "";
+				itemValues.add(toSend);
+				totalValue += money;
+			}
+			sTotal = formatter.format(totalValue);
+			totalCost = "Total Cost of Items: " + sTotal + "";
+			model.addAttribute("moneyItems", itemValues);
+			model.addAttribute("totalCost", totalCost);
+		}
+		else {
+			double amountOff = thisPromo.getAmount();
+			double newTotal = totalValue - amountOff;
+			sTotal = formatter.format(newTotal);
+			totalCost = "Total Cost of Items: " + sTotal + "";
+			model.addAttribute("moneyItems", itemValues);
+			model.addAttribute("totalCost", totalCost);
+		}
 		return "viewCart";
 	}
 	
