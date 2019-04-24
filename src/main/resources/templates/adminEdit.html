@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <meta charset="ISO-8859-1">
 <title>Update Menu Item</title>
 </head>
 <body>
+
+<header>Edit Menu</header>
+<div class="container">
 <form action="#" th:action="@{/adminEdit/{id}(id=${menuItem.id})}" th:object="${menuItem}" method="post">
 	<label for="name">Item Name:</label>
 	<input type="text" th:field="*{itemName}" id="itemName">
@@ -34,5 +38,7 @@
 	
 	<input type="submit" value="Update Item">
 </form>
+<a href="/adminportal">Admin Home</a><br />
+</div>
 </body>
 </html>
