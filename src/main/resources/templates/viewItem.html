@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
+
 <body>
+<div class="container">
 	<form name='q' th:object=${newCartItem} th:action="@{/addItemToCart}" method="post">
 		<input type="hidden" th:field="${orders.orderId}" name="orderId">
 		<input type="hidden" th:field="${item.itemId}" name="itemId">
@@ -27,6 +29,6 @@
 	</form>
 	<a href="/viewMenu">Return to menu home</a><br />
 	<a href="/customerportal">Return to portal</a> <br />
-
+</div>
 </body>
 </html>
