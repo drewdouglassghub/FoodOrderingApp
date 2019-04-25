@@ -178,7 +178,7 @@ public class WebController {
 		Orders order = oRepo.findByCustomerId(user.getUserId());
 		ca.setOrderId(order);
 		oiRepo.save(ca);
-		return "/viewOrders";
+		return "customerportal";
 	}
 	
 	
