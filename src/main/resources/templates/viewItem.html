@@ -3,32 +3,38 @@
 <head>
 <link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>View Menu Item</title>
 </head>
 
+<header th:text="${item.itemName}"> </header>
 <body>
-<div class="container">
+<div class="itemContainer">
 	<form name='q' th:object=${newCartItem} th:action="@{/addItemToCart}" method="post">
 		<input type="hidden" th:field="${orders.orderId}" name="orderId">
 		<input type="hidden" th:field="${item.itemId}" name="itemId">
-		Item Name:
+		
 		<p>
-			<span th:text="${item.itemName}"></span>
+			<span th:text="|Item Name: ${item.itemName}  |"></span>
 		</p>
 		<input type="hidden" th:value="${item.itemName}" name="productName" />
-		Item Description:
+		
 		<p>
-			<span th:text="${item.itemDescription}"></span>
+			<span th:text="|Item Description: ${item.itemDescription}  |"></span>
 		</p>
-		Item Price:
-		<p>
-			<span th:text="${item.itemPrice}"></span>
+		<!-- Item Price: no!!! -->
+		<p> 
+			<span th:text="|Item Price: ${item.itemPrice}  |"></span>
 		</p>
-		Quantity: <input type=text name="quantity"> <input
-			type="submit" name="submit" value="Submit">
+		Quantity: <input type=text name="quantity"> 
+		<input type="submit" name="submit" value="Submit">
 	</form>
-	<a href="/viewMenu">Return to menu home</a><br />
-	<a href="/customerportal">Return to portal</a> <br />
 </div>
+<div class="container3">
+<a href="/viewMenu">Return to menu home</a>
+	<a href="/customerportal">Return to portal</a> 
+</div>
+
+
+
 </body>
 </html>
