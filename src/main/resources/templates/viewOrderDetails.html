@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
+<meta charset="ISO-8859-1">
+<title>View Order Details</title>
+</head>
+<body>
+	<div class="container">
+		<table>
+			<thead>
+				<tr>
+					<th>Item Name:</th>
+					<th>Quantity:</th>
+					<th>Requests:</th>
+				</tr>
+			</thead>
+			<tr th:each="currentOrderItems : ${orderitems}">
+				<td th:text="${currentOrderItems.getItemName()}" />
+				<td th:text="${currentOrderItems.getQuantity()}" />
+				<td th:text="${currentOrderItems.getRequest()}" />
+			</tr>
+		</table>
+		
+		<a href="../viewOrders">View All Orders</a><br/>
+		<a href="/adminportal">Return to portal</a> <br />
+	</div>
+</body>
+</html>

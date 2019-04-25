@@ -16,18 +16,15 @@
     </tr>
 </thead>
 <tr th:each="currentOrder : ${orders}" >
-<td th:text="${currentOrder.venueid}" />
- <td th:text="${currentOrder.customerid}" />
+<td th:text="${currentOrder.orderId}" />
+ <td th:text="${currentOrder.customerId}" />
 
  
  <td><a
-th:href="@{/edit/{id}(id=${currentVenue.venueid})}">Edit Order</a></td>
- <td><a
-th:href="@{/delete/{id}(id=${currentVenue.venueid})}">Cancel Order</a></td>
+th:href="@{/viewOrderDetails/{id}(id=${currentOrder.orderId})}">View order</a></td>
 </tr>
 </table>
-<a href="../addVenue">Add venue</a>
-<a href="../">Home</a><br />
+<a href="/adminportal">Return to portal</a> <br />
 </div>
 
 
