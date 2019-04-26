@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
+<meta charset="ISO-8859-1">
+<title>Update Department Item</title>
+</head>
+<body>
+
+<header>Edit Menu</header>
+<div class="container">
+<form action="#" th:action="@{/adminDeptEdit/{id}(id=${department.departmentId})}" th:object="${department}" method="post">
+	<label for="departmentName">Department Name:</label>
+	<input type="text" th:field="*{departmentName}" id="departmentName">
+	<span th:if="${#fields.hasErrors('departmentName')}" th:errors="*{departmentName}"></span><br/>
+	
+	<input type="submit" value="Update Item">
+</form>
+<a href="/adminportal">Admin Home</a><br />
+</div>
+</body>
+</html>

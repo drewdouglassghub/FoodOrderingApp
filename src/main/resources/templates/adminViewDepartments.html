@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
 <meta charset="ISO-8859-1">
 <title>Admin Department View</title>
 </head>
@@ -16,7 +16,7 @@
 			<td><p><strong>Department Name: </strong></p></td>
 			<td th:text="${department.getDepartmentName()}" />
 			<td><a th:href="@{/adminDeptEdit/{id}(id=${department.departmentId})}">Edit</a></td>
-			<td><a th:href="@{/adminDeptDelete/{id}(id=${department.getDepartmentName()})}">Delete</a></td>
+			<td><a th:href="@{/adminDeptDelete/{id}(id=${department.departmentId})}">Delete</a></td>
 		</tr>
 	</table>
 <a href="../adminportal">Admin Home</a>

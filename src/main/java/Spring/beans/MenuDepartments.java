@@ -3,6 +3,8 @@ package Spring.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 @Table(name="menu_departments")
 public class MenuDepartments {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="department_id")
 	private long departmentId;
 	@Column(name="department_name")
@@ -19,9 +22,9 @@ public class MenuDepartments {
 		super();
 	}
 	
-	public MenuDepartments(long id, String departmentName) {
+	public MenuDepartments(long departmentId, String departmentName) {
 		super();
-		this.departmentId = id;
+		this.departmentId = departmentId;
 		this.departmentName = departmentName;
 	}
 
