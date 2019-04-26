@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/style.css}">
 <meta charset="ISO-8859-1">
 <title>Customer Profile</title>
 </head>
 <body>
 
 
+<header>Customer Profile</header>
+
 	<div class="container">
-	
+	<h2 th:text="|Welcome, ${user.getUserName()}!  |"></h2>
 <table>
 <thead>
     <tr>
@@ -26,8 +28,12 @@
 <td th:text="${user.getPhoneNumber()}" />
 </tr>
 </table>
-<a href="/customerportal">Customer Portal</a><br/>
+
+</div>
+<div class="container3">
+<a href="/customerportal">Customer Portal</a>
 <a href="/logout">Logout</a>
 </div>
+
 </body>
 </html>

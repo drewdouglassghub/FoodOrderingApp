@@ -155,6 +155,14 @@ public class WebController {
 		}
 	}
 	
+	@GetMapping("/viewOrderDetails/{id}")
+	public String viewOrderDetails(@PathVariable("id") long id, User user, Model model) {
+		OrderItems oi = oiRepo.findById(id);
+		model.addAttribute("user", user);
+		model.addAttribute("orderitems", oi);
+		return "viewOrderDetails";
+	}
+	
 	
 	@GetMapping("/addOrderItem/{id}")
 	public String viewItem(@PathVariable("id") long id, User user, Orders order, Model model) {
