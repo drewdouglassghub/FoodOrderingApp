@@ -556,6 +556,35 @@ public class WebController {
 		model.addAttribute("departments", deptRepo.findAll());
 		return "adminViewDepartments";
 	}
+
+	@GetMapping("adminDeptEdit/{id}")
+	public String editDepartmentItem(@PathVariable("id") long id, Model model) {
+		MenuDepartments md = deptRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid department id:" + id));
+		model.addAttribute("department", md);
+		return "adminDeptEdit";
+		
+	}
+	
+	@PostMapping("adminDeptEdit/{id}")
+	public String updateDepartmentItem(@PathVariable("id") long id, @Valid MenuDepartments md, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			md.setDepartmentId(id);
+			return "adminDeptEdit";
+		}
+		
+		deptRepo.save(md);
+		model.addAttribute("departments", deptRepo.findAll());
+		return "adminViewDepartments";
+	}
+	
+	@GetMapping("adminDeptDelete/{id}")
+	public String deleteDepartmentItem(@PathVariable("id") long id, Model model) {
+		MenuDepartments mi = deptRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Department Id: " + id));
+		
+		deptRepo.delete(mi);
+		model.addAttribute("departments", deptRepo.findAll());
+		return "adminViewDepartments";
+	}
 	
 	@GetMapping("/adminAddPromotion")
 	public String addNewPromotion(Model model) {
