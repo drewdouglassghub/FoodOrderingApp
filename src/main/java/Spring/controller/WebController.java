@@ -1,13 +1,10 @@
 package Spring.controller;
 
-import java.sql.Date;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -112,8 +109,10 @@ public class WebController {
 	}
 	@PostMapping("/createUser")
 		public String createUser(User user, Model model) {
+		
+			LocalDate d = LocalDate.now();
 			user.setUserAuth("CUSTOMER");
-			Date d = new Date(Calendar.getInstance().getTime().getTime());
+			
 			user.setVisitDate(d);
 			uRepo.save(user);
 			
@@ -290,7 +289,7 @@ public class WebController {
 		model.addAttribute("totalCost", totalCost);
 		
 
-		if(user.getUserAuth().equals("CUSTOMER")||user.getUserAuth().equals("ADMIN")) {
+		if(user.getUserAuth().equals("CUSTOMER") || user.getUserAuth().equals("ADMIN")) {
 			return "viewCart";
 		}else {
 			model.addAttribute("message", "Please sign in to view your cart.");
@@ -462,30 +461,41 @@ public class WebController {
 
 			User u = uRepo.findByUserName(username);
 			//model.addAttribute("tempUser", u);
-
+			
+			LocalDate date = LocalDate.now();
+			
 			if (u.getPassWord().equals(password) && u.getUserAuth().equals("ADMIN")) {
 				
+				user.setUserId(u.getUserId());
 				user.setFirstName(u.getFirstName());
 				user.setLastName(u.getLastName());
-				user.setVisitDate(u.getVisitDate());
+				user.setVisitDate(date);
 				user.setEmail(u.getEmail());
 				user.setPhoneNumber(u.getPhoneNumber());
 				user.setUserName(u.getUserName());
-				user.setUserAuth(u.getUserAuth());
-				model.addAttribute("user", u);
+				user.setUserAuth(u.getUserAuth());	
+				user.setPassWord(password);
+				
+				model.addAttribute("user", user);
+				uRepo.save(user);
 				return "viewAdmin";
 
 			} else if (u.getPassWord().equals(password) && u.getUserAuth().equals("CUSTOMER")) {
 				
+				user.setUserId(u.getUserId());
 				user.setFirstName(u.getFirstName());
 				user.setLastName(u.getLastName());
-				user.setVisitDate(u.getVisitDate());
+				user.setVisitDate(date);
 				user.setEmail(u.getEmail());
 				user.setPhoneNumber(u.getPhoneNumber().toString());
 				user.setUserName(u.getUserName());
 				user.setUserAuth(u.getUserAuth());
-				model.addAttribute("user", u);
+				user.setPassWord(password);
+	
+				model.addAttribute("user", user);
+				uRepo.save(user);
 				return "viewCustomer";
+				
 			} else {
 			return "loginError";
 			}

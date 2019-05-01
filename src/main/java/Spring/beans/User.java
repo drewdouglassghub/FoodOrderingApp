@@ -1,6 +1,6 @@
 package Spring.beans;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="user")
+@DynamicUpdate
 public class User {
 	
 	@Id
@@ -21,7 +25,8 @@ public class User {
 	@Column(name = "USER_LASTNAME")
 	private String lastName;
 	@Column(name = "USER_VISITDATE")
-	private Date visitDate;
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private LocalDate visitDate;
 	@Column(name = "USER_EMAIL")
 	private String email;
 	@Column(name = "USER_PHONE")
@@ -37,7 +42,7 @@ public class User {
 	public User() {
 		super();
 	}
-	public User(long userId, String firstName, String lastName, Date visitDate, String email, String phoneNumber,
+	public User(long userId, String firstName, String lastName, LocalDate visitDate, String email, String phoneNumber,
 			String userName, String passWord, String userAuth) {
 		super();
 		this.userId = userId;
@@ -68,10 +73,10 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Date getVisitDate() {
+	public LocalDate getVisitDate() {
 		return visitDate;
 	}
-	public void setVisitDate(Date visitDate) {
+	public void setVisitDate(LocalDate visitDate) {
 		this.visitDate = visitDate;
 	}
 	public String getEmail() {
